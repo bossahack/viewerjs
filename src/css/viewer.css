@@ -156,13 +156,13 @@
 }
 
 .viewer-navbar {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 1);
   overflow: hidden;
 }
 
 .viewer-list {
   box-sizing: content-box;
-  height: 50px;
+  height: 80px;
   margin: 0;
   overflow: hidden;
   padding: 1px 0;
@@ -172,12 +172,12 @@
     cursor: pointer;
     float: left;
     font-size: 0;
-    height: 50px;
+    height: 80px;
     line-height: 0;
     opacity: 0.5;
     overflow: hidden;
     transition: opacity 0.15s;
-    width: 30px;
+    width: 80px;
 
     &:focus,
     &:hover {
@@ -189,7 +189,7 @@
     }
 
     & + li {
-      margin-left: 1px;
+      margin-left: 10px;
     }
   }
 
@@ -209,6 +209,8 @@
   & > .viewer-active:focus,
   & > .viewer-active:hover {
     opacity: 1;
+    border: 3px solid #E83F49;
+    box-sizing: border-box;
   }
 }
 
@@ -235,7 +237,9 @@
     display: inline-block;
     margin: 0 auto 5px;
     overflow: hidden;
-    padding: 6px 3px;
+    padding: 14px 0px;
+    background-color: #808080;
+    border-radius: 26px;
 
     & > li {
       background-color: rgba(0, 0, 0, 0.5);
@@ -246,6 +250,7 @@
       overflow: hidden;
       transition: background-color 0.15s;
       width: 24px;
+      margin:0 24px;
 
       &:focus,
       &:hover {
@@ -266,6 +271,10 @@
       & + li {
         margin-left: 1px;
       }
+    }
+    & [class^='viewer-divider']{
+      width: 1px;
+      background-color: white;
     }
 
     & > .viewer-small {
@@ -332,13 +341,13 @@
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   cursor: pointer;
-  height: 80px;
+  height: 48px;
   overflow: hidden;
   position: absolute;
-  right: -40px;
-  top: -40px;
+  right: 40px;
+  top: 40px;
   transition: background-color 0.15s;
-  width: 80px;
+  width: 48px;
   -webkit-app-region: no-drag;
 
   &:focus,
@@ -356,6 +365,25 @@
     left: 15px;
     position: absolute;
   }
+}
+
+.viewer-button-prev{
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  background-color: #808080;
+  border-radius: 50%;
+}
+.viewer-button-next{
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  background-color: #808080;
+  border-radius: 50%;
 }
 
 .viewer-fixed {

@@ -10,6 +10,8 @@ export default (
     + '</div>'
     + '<div class="viewer-tooltip" role="alert" aria-hidden="true"></div>'
     + '<div class="viewer-button" data-viewer-action="mix" role="button"></div>'
+    + '<div class="viewer-button-prev" data-viewer-action="prev" role="button"></div>'
+    + '<div class="viewer-button-next" data-viewer-action="next" role="button"></div>'
     + '<div class="viewer-player"></div>'
   + '</div>'
 );

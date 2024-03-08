@@ -361,6 +361,16 @@
     }
   }
 
+  &-button-pre{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    background-color: #808080;
+    border-radius: 50%;
+  }
+
   &-fixed {
     position: fixed;
   }

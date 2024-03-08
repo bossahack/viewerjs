@@ -9,6 +9,7 @@ import {
   CLASS_LOADING,
   CLASS_SHOW,
   CLASS_TRANSITION,
+  CLASS_ONE,
   EVENT_CLICK,
   EVENT_ERROR,
   EVENT_HIDE,
@@ -1120,10 +1121,14 @@ export default {
    * @returns {Viewer} this
    */
   toggle(_originalEvent = null) {
+    const { viewer } = this;
+    const one=viewer.querySelector(`.${NAMESPACE}-one-to-one`)
     if (this.imageData.ratio === 1) {
       this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
+      removeClass(one, CLASS_ONE);
     } else {
       this.zoomTo(1, true, null, _originalEvent);
+      addClass(one,CLASS_ONE)
     }
 
     return this;
@@ -1283,4 +1288,11 @@ export default {
     element[NAMESPACE] = undefined;
     return this;
   },
+  toggleNavbar () {
+    console.log(this.options.navbar, this)
+    this.options.navbar = !this.options.navbar;
+    setStyle(this.navbar, {
+      display:this.options.navbar?'':'none',
+    });
+  }
 };

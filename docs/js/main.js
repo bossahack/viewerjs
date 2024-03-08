@@ -59,7 +59,18 @@ window.onload = function () {
     },
     stop: function (e) {
       console.log(e.type);
-    }
+    },
+    toolbar: {
+      toogleNavbar: function () {
+        viewer.toggleNavbar();
+      },
+      divider1:true,
+      zoomOut: true,
+      zoomIn: true,
+      divider2:true,
+      oneToOne: true,      
+    },
+    title:false
   };
   var viewer = new Viewer(pictures, options);
 

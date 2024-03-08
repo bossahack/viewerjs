@@ -27,6 +27,7 @@ export const CLASS_MOVE = `${NAMESPACE}-move`;
 export const CLASS_OPEN = `${NAMESPACE}-open`;
 export const CLASS_SHOW = `${NAMESPACE}-show`;
 export const CLASS_TRANSITION = `${NAMESPACE}-transition`;
+export const CLASS_ONE=`${NAMESPACE}-one`
 
 // Native events
 export const EVENT_CLICK = 'click';
@@ -84,4 +85,6 @@ export const BUTTONS = [
   'rotate-right',
   'flip-horizontal',
   'flip-vertical',
+  'toogle-navbar',
+  'divider'
 ];

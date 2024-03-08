@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2023-09-17T03:16:38.052Z
+ * Date: 2024-03-07T03:52:18.198Z
  */
 
 function ownKeys(e, r) {
@@ -28,6 +28,20 @@ function _objectSpread2(e) {
     });
   }
   return e;
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : String(i);
 }
 function _typeof(o) {
   "@babel/helpers - typeof";
@@ -73,20 +87,6 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
-}
-function _toPrimitive(input, hint) {
-  if (typeof input !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (typeof res !== "object") return res;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return (hint === "string" ? String : Number)(input);
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return typeof key === "symbol" ? key : String(key);
 }
 
 var DEFAULTS = {
@@ -296,7 +296,7 @@ var DEFAULTS = {
   stop: null
 };
 
-var TEMPLATE = '<div class="viewer-container" tabindex="-1" touch-action="none">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list" role="navigation"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip" role="alert" aria-hidden="true"></div>' + '<div class="viewer-button" data-viewer-action="mix" role="button"></div>' + '<div class="viewer-player"></div>' + '</div>';
+var TEMPLATE = '<div class="viewer-container" tabindex="-1" touch-action="none">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list" role="navigation"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip" role="alert" aria-hidden="true"></div>' + '<div class="viewer-button" data-viewer-action="mix" role="button"></div>' + '<div class="viewer-button-prev" data-viewer-action="prev" role="button"></div>' + '<div class="viewer-button-next" data-viewer-action="next" role="button"></div>' + '<div class="viewer-player"></div>' + '</div>';
 
 var IS_BROWSER = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 var WINDOW = IS_BROWSER ? window : {};
@@ -327,6 +327,7 @@ var CLASS_MOVE = "".concat(NAMESPACE, "-move");
 var CLASS_OPEN = "".concat(NAMESPACE, "-open");
 var CLASS_SHOW = "".concat(NAMESPACE, "-show");
 var CLASS_TRANSITION = "".concat(NAMESPACE, "-transition");
+var CLASS_ONE = "".concat(NAMESPACE, "-one");
 
 // Native events
 var EVENT_CLICK = 'click';
@@ -372,7 +373,7 @@ var DATA_ACTION = "".concat(NAMESPACE, "Action");
 var REGEXP_SPACES = /\s\s*/;
 
 // Misc
-var BUTTONS = ['zoom-in', 'zoom-out', 'one-to-one', 'reset', 'prev', 'play', 'next', 'rotate-left', 'rotate-right', 'flip-horizontal', 'flip-vertical'];
+var BUTTONS = ['zoom-in', 'zoom-out', 'one-to-one', 'reset', 'prev', 'play', 'next', 'rotate-left', 'rotate-right', 'flip-horizontal', 'flip-vertical', 'toogle-navbar', 'divider'];
 
 /**
  * Check if the given value is a string.
@@ -2579,10 +2580,14 @@ var methods = {
    */
   toggle: function toggle() {
     var _originalEvent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var viewer = this.viewer;
+    var one = viewer.querySelector(".".concat(NAMESPACE, "-one-to-one"));
     if (this.imageData.ratio === 1) {
       this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
+      removeClass(one, CLASS_ONE);
     } else {
       this.zoomTo(1, true, null, _originalEvent);
+      addClass(one, CLASS_ONE);
     }
     return this;
   },
@@ -2716,6 +2721,13 @@ var methods = {
     }
     element[NAMESPACE] = undefined;
     return this;
+  },
+  toggleNavbar: function toggleNavbar() {
+    console.log(this.options.navbar, this);
+    this.options.navbar = !this.options.navbar;
+    setStyle(this.navbar, {
+      display: this.options.navbar ? '' : 'none'
+    });
   }
 };
 
@@ -3114,6 +3126,7 @@ var Viewer = /*#__PURE__*/function () {
         var zoomButtons = BUTTONS.slice(0, 3);
         var rotateButtons = BUTTONS.slice(7, 9);
         var scaleButtons = BUTTONS.slice(9);
+        BUTTONS[BUTTONS.length - 1];
         if (!custom) {
           addClass(toolbar, getResponsiveClass(options.toolbar));
         }
@@ -3233,3 +3246,4 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 export { Viewer as default };
+//# sourceMappingURL=viewer.esm.js.map
