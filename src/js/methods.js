@@ -1297,9 +1297,9 @@ export default {
   },
   pagePrev () {
     console.log(this.options.navbar, this)
-    let currentX = window.getComputedStyle(this.list).transform.match(/\d+/g)[ 4 ] || 0;
-    let fullWidth = this.navbar.offsetWidth;
-    let x = currentX + fullWidth;
+    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[ 4 ] || 0;
+    let fullWidth = this.navbar.offsetWidth-70*2;
+    let x = +currentX + fullWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
@@ -1308,8 +1308,8 @@ export default {
   pageNext () {
     console.log(this.options.navbar, this)
     let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[ 4 ] || 0;
-    let fullWidth = this.navbar.offsetWidth;
-    let x = currentX - fullWidth;
+    let fullWidth = this.navbar.offsetWidth-70*2;
+    let x = +currentX - fullWidth;
 
     const item = this.items[this.index];
     const gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);

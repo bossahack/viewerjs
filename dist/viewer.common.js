@@ -2740,9 +2740,9 @@ var methods = {
   },
   pagePrev: function pagePrev() {
     console.log(this.options.navbar, this);
-    var currentX = window.getComputedStyle(this.list).transform.match(/\d+/g)[4] || 0;
-    var fullWidth = this.navbar.offsetWidth;
-    var x = currentX + fullWidth;
+    var currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[4] || 0;
+    var fullWidth = this.navbar.offsetWidth - 70 * 2;
+    var x = +currentX + fullWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
@@ -2751,8 +2751,8 @@ var methods = {
   pageNext: function pageNext() {
     console.log(this.options.navbar, this);
     var currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[4] || 0;
-    var fullWidth = this.navbar.offsetWidth;
-    var x = currentX - fullWidth;
+    var fullWidth = this.navbar.offsetWidth - 70 * 2;
+    var x = +currentX - fullWidth;
     var item = this.items[this.index];
     var gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);
     var min = this.list.offsetWidth - fullWidth / 2 - gutter / 2;
