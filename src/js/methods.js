@@ -1294,5 +1294,30 @@ export default {
     setStyle(this.navbar, {
       display:this.options.navbar?'':'none',
     });
+  },
+  pagePrev () {
+    console.log(this.options.navbar, this)
+    let currentX = window.getComputedStyle(this.list).transform.match(/\d+/g)[ 4 ] || 0;
+    let fullWidth = this.navbar.offsetWidth;
+    let x = currentX + fullWidth;
+    if (x > fullWidth / 2) x = fullWidth / 2;
+    setStyle(this.list, {
+      transform:`translateX(${x}px)`,
+    });
+  },
+  pageNext () {
+    console.log(this.options.navbar, this)
+    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[ 4 ] || 0;
+    let fullWidth = this.navbar.offsetWidth;
+    let x = currentX - fullWidth;
+
+    const item = this.items[this.index];
+    const gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);
+    let min = this.list.offsetWidth - fullWidth / 2 - gutter / 2;
+    console.log('min'+min)
+    if (x < -min) x = -min;
+    setStyle(this.list, {
+      transform:`translateX(${x}px)`,
+    });
   }
 };

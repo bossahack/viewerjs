@@ -157,7 +157,7 @@
 
 .viewer-navbar {
   background-color: rgba(0, 0, 0, 1);
-  overflow: hidden;
+ 
 }
 
 .viewer-list {
@@ -212,6 +212,19 @@
     border: 3px solid #E83F49;
     box-sizing: border-box;
   }
+}
+.viewer-list-prev,.viewer-list-next{
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 80px;
+  background-color: red;
+}
+.viewer-list-prev{
+  left: 0;
+}
+.viewer-list-next{
+  right: 0;
 }
 
 .viewer-player {

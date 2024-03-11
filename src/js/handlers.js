@@ -115,6 +115,12 @@ export default {
       case 'flip-vertical':
         this.scaleY(-imageData.scaleY || -1);
         break;
+      case 'page-prev':
+        this.pagePrev();
+        break;
+      case 'page-next':
+        this.pageNext();
+        break;
 
       default:
         if (this.played) {

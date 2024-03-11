@@ -256,7 +256,7 @@ export default {
 
       this.imageData = imageData;
       this.initialImageData = initialImageData;
-
+      console.log(initialImageData)
       if (done) {
         done();
       }

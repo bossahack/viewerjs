@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-07T03:52:18.198Z
+ * Date: 2024-03-11T01:08:25.785Z
  */
 
 (function (global, factory) {
@@ -302,7 +302,7 @@
     stop: null
   };
 
-  var TEMPLATE = '<div class="viewer-container" tabindex="-1" touch-action="none">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list" role="navigation"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip" role="alert" aria-hidden="true"></div>' + '<div class="viewer-button" data-viewer-action="mix" role="button"></div>' + '<div class="viewer-button-prev" data-viewer-action="prev" role="button"></div>' + '<div class="viewer-button-next" data-viewer-action="next" role="button"></div>' + '<div class="viewer-player"></div>' + '</div>';
+  var TEMPLATE = '<div class="viewer-container" tabindex="-1" touch-action="none">' + '<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list" role="navigation"></ul>' + '<div class="viewer-list-prev" data-viewer-action="page-prev" role="navigation"></div>' + '<div class="viewer-list-next" data-viewer-action="page-next" role="navigation"></div>' + '</div>' + '</div>' + '<div class="viewer-tooltip" role="alert" aria-hidden="true"></div>' + '<div class="viewer-button" data-viewer-action="mix" role="button"></div>' + '<div class="viewer-button-prev" data-viewer-action="prev" role="button"></div>' + '<div class="viewer-button-next" data-viewer-action="next" role="button"></div>' + '<div class="viewer-player"></div>' + '</div>';
 
   var IS_BROWSER = typeof window !== 'undefined' && typeof window.document !== 'undefined';
   var WINDOW = IS_BROWSER ? window : {};
@@ -1154,6 +1154,7 @@
         }
         _this2.imageData = imageData;
         _this2.initialImageData = initialImageData;
+        console.log(initialImageData);
         if (done) {
           done();
         }
@@ -1318,6 +1319,12 @@
           break;
         case 'flip-vertical':
           this.scaleY(-imageData.scaleY || -1);
+          break;
+        case 'page-prev':
+          this.pagePrev();
+          break;
+        case 'page-next':
+          this.pageNext();
           break;
         default:
           if (this.played) {
@@ -2733,6 +2740,30 @@
       this.options.navbar = !this.options.navbar;
       setStyle(this.navbar, {
         display: this.options.navbar ? '' : 'none'
+      });
+    },
+    pagePrev: function pagePrev() {
+      console.log(this.options.navbar, this);
+      var currentX = window.getComputedStyle(this.list).transform.match(/\d+/g)[4] || 0;
+      var fullWidth = this.navbar.offsetWidth;
+      var x = currentX + fullWidth;
+      if (x > fullWidth / 2) x = fullWidth / 2;
+      setStyle(this.list, {
+        transform: "translateX(".concat(x, "px)")
+      });
+    },
+    pageNext: function pageNext() {
+      console.log(this.options.navbar, this);
+      var currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[4] || 0;
+      var fullWidth = this.navbar.offsetWidth;
+      var x = currentX - fullWidth;
+      var item = this.items[this.index];
+      var gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);
+      var min = this.list.offsetWidth - fullWidth / 2 - gutter / 2;
+      console.log('min' + min);
+      if (x < -min) x = -min;
+      setStyle(this.list, {
+        transform: "translateX(".concat(x, "px)")
       });
     }
   };
