@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-11T02:25:35.068Z
+ * Date: 2024-03-11T01:08:25.815Z
  */
 
 .viewer-zoom-in::before, .viewer-zoom-out::before, .viewer-one-to-one::before, .viewer-reset::before, .viewer-prev::before, .viewer-play::before, .viewer-next::before, .viewer-rotate-left::before, .viewer-rotate-right::before, .viewer-flip-horizontal::before, .viewer-flip-vertical::before, .viewer-fullscreen::before, .viewer-fullscreen-exit::before, .viewer-close::before {
@@ -448,6 +448,7 @@
   background-repeat: no-repeat;
   background-size: 20px 20px;
   border-radius: 50%;
+  cursor: pointer;
   height: 48px;
   left: 40px;
   position: absolute;
@@ -462,6 +463,7 @@
   background-repeat: no-repeat;
   background-size: 20px 20px;
   border-radius: 50%;
+  cursor: pointer;
   height: 48px;
   position: absolute;
   right: 40px;
