@@ -297,10 +297,10 @@
 .viewer-toolbar {
   & > ul {
     display: inline-block;
-    margin: 0 auto 5px;
+    margin: 0 auto 20px;
     overflow: hidden;
     padding: 12px 0px;
-    background-color: #808080;
+    background-color: rgb(153 153 153 / 80%);
     border-radius: 26px;
 
     & > li {
@@ -396,7 +396,7 @@
 }
 
 .viewer-button {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color:rgb(153 153 153 / 60%);
   border-radius: 50%;
   cursor: pointer;
   height: 48px;
@@ -408,10 +408,7 @@
   width: 48px;
   -webkit-app-region: no-drag;
 
-  &:focus,
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+  
 
   &:focus {
     box-shadow: 0 0 3px #fff;
@@ -431,7 +428,7 @@
   position: absolute;
   left: 40px;
   top: 50%;
-  background-color: #80808099;
+  background-color: rgb(153 153 153 / 60%);
   border-radius: 50%;
   background-image: url(../images/arrow_left.png);
   background-size: 20px 20px;
@@ -445,7 +442,7 @@
   position: absolute;
   right: 40px;
   top: 50%;
-  background-color: #80808099;
+  background-color: rgb(153 153 153 / 60%);
   border-radius: 50%;
   background-image: url(../images/arrow_right.png);
   background-size: 20px 20px;
@@ -471,7 +468,7 @@
 }
 
 .viewer-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .viewer-invisible {

@@ -205,6 +205,10 @@ export default {
     } else {
       hideImmediately();
     }
+    this.options._navbar = undefined;
+    setStyle(this.navbar, {
+      display:'block',
+    });
 
     return this;
   },
@@ -287,6 +291,7 @@ export default {
     this.index = index;
     this.imageData = {};
     addClass(image, CLASS_INVISIBLE);
+    // addClass(image, CLASS_FADE);
 
     if (options.loading) {
       addClass(canvas, CLASS_LOADING);
@@ -1290,24 +1295,32 @@ export default {
   },
   toggleNavbar () {
     console.log(this.options.navbar, this)
-    this.options.navbar = !this.options.navbar;
+    // this.options.navbar = !this.options.navbar;
+    if (this.options._navbar === undefined) {
+      this.options._navbar = this.options.navbar;
+    }
+    this.options._navbar = !this.options._navbar;
     setStyle(this.navbar, {
-      display:this.options.navbar?'':'none',
+      display:this.options._navbar?'':'none',
     });
   },
   pagePrev () {
     console.log(this.options.navbar, this)
-    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[ 4 ] || 0;
+    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
     let fullWidth = this.navbar.offsetWidth-70*2;
     let x = +currentX + fullWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
+    if (x > 0) {
+      x=0      
+    }
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
+    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
   },
   pageNext () {
     console.log(this.options.navbar, this)
-    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[ 4 ] || 0;
+    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
     let fullWidth = this.navbar.offsetWidth-70*2;
     let x = +currentX - fullWidth;
 
@@ -1319,5 +1332,18 @@ export default {
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
+    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+  },
+  setPrevNextVisible (transX,containerWidth,listWidth) {
+    if (transX >= 0) {
+      document.querySelector('.viewer-list-prev').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-prev').style.display = 'block';      
+    }
+    if (listWidth + transX < containerWidth) {
+      document.querySelector('.viewer-list-next').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-next').style.display = 'block';      
+    }
   }
 };

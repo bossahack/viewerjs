@@ -174,11 +174,25 @@ export default {
     const { offsetWidth } = item;
     const outerWidth = offsetWidth + gutter;
 
+    let transX = ((this.viewerData.width - offsetWidth) / 2) - outerWidth * index;
+    if (transX > 0) {
+      transX = 0;
+      document.querySelector('.viewer-list-prev').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-prev').style.display = 'block';      
+    }
+    let listWidth = outerWidth * this.length - gutter;
+    if (listWidth + transX < this.containerData.width) {
+      document.querySelector('.viewer-list-next').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-next').style.display = 'block';      
+    }
+
     // Place the active item in the center of the screen
     setStyle(this.list, assign({
-      width: outerWidth * this.length - gutter,
+      width: listWidth,
     }, getTransforms({
-      translateX: ((this.viewerData.width - offsetWidth) / 2) - outerWidth * index,
+      translateX: transX,
     })));
   },
 
@@ -194,7 +208,7 @@ export default {
 
   initImage(done) {
     const { options, image, viewerData } = this;
-    const footerHeight = this.footer.offsetHeight;
+    const footerHeight = this.navbar.offsetHeight;//  this.footer.offsetHeight;
     const viewerWidth = viewerData.width;
     const viewerHeight = Math.max(viewerData.height - footerHeight, footerHeight);
     const oldImageData = this.imageData || {};

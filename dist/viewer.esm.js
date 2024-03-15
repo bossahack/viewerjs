@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-12T09:46:00.796Z
+ * Date: 2024-03-11T01:08:25.785Z
  */
 
 function ownKeys(e, r) {
@@ -1075,12 +1075,25 @@ var render = {
     var gutter = parseInt(window.getComputedStyle(next || item).marginLeft, 10);
     var offsetWidth = item.offsetWidth;
     var outerWidth = offsetWidth + gutter;
+    var transX = (this.viewerData.width - offsetWidth) / 2 - outerWidth * index;
+    if (transX > 0) {
+      transX = 0;
+      document.querySelector('.viewer-list-prev').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-prev').style.display = 'block';
+    }
+    var listWidth = outerWidth * this.length - gutter;
+    if (listWidth + transX < this.containerData.width) {
+      document.querySelector('.viewer-list-next').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-next').style.display = 'block';
+    }
 
     // Place the active item in the center of the screen
     setStyle(this.list, assign({
-      width: outerWidth * this.length - gutter
+      width: listWidth
     }, getTransforms({
-      translateX: (this.viewerData.width - offsetWidth) / 2 - outerWidth * index
+      translateX: transX
     })));
   },
   resetList: function resetList() {
@@ -1096,7 +1109,7 @@ var render = {
     var options = this.options,
       image = this.image,
       viewerData = this.viewerData;
-    var footerHeight = this.footer.offsetHeight;
+    var footerHeight = this.navbar.offsetHeight; //  this.footer.offsetHeight;
     var viewerWidth = viewerData.width;
     var viewerHeight = Math.max(viewerData.height - footerHeight, footerHeight);
     var oldImageData = this.imageData || {};
@@ -1807,6 +1820,10 @@ var methods = {
     } else {
       hideImmediately();
     }
+    this.options._navbar = undefined;
+    setStyle(this.navbar, {
+      display: 'block'
+    });
     return this;
   },
   /**
@@ -1872,6 +1889,8 @@ var methods = {
     this.index = index;
     this.imageData = {};
     addClass(image, CLASS_INVISIBLE);
+    // addClass(image, CLASS_FADE);
+
     if (options.loading) {
       addClass(canvas, CLASS_LOADING);
     }
@@ -2731,24 +2750,34 @@ var methods = {
   },
   toggleNavbar: function toggleNavbar() {
     console.log(this.options.navbar, this);
-    this.options.navbar = !this.options.navbar;
+    // this.options.navbar = !this.options.navbar;
+    if (this.options._navbar === undefined) {
+      this.options._navbar = this.options.navbar;
+    }
+    this.options._navbar = !this.options._navbar;
     setStyle(this.navbar, {
-      display: this.options.navbar ? '' : 'none'
+      display: this.options._navbar ? '' : 'none'
     });
   },
   pagePrev: function pagePrev() {
+    var _window$getComputedSt;
     console.log(this.options.navbar, this);
-    var currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[4] || 0;
+    var currentX = ((_window$getComputedSt = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt === void 0 ? void 0 : _window$getComputedSt[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     var x = +currentX + fullWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
+    if (x > 0) {
+      x = 0;
+    }
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
     });
+    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
   },
   pageNext: function pageNext() {
+    var _window$getComputedSt2;
     console.log(this.options.navbar, this);
-    var currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)[4] || 0;
+    var currentX = ((_window$getComputedSt2 = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt2 === void 0 ? void 0 : _window$getComputedSt2[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     var x = +currentX - fullWidth;
     var item = this.items[this.index];
@@ -2759,6 +2788,19 @@ var methods = {
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
     });
+    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+  },
+  setPrevNextVisible: function setPrevNextVisible(transX, containerWidth, listWidth) {
+    if (transX >= 0) {
+      document.querySelector('.viewer-list-prev').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-prev').style.display = 'block';
+    }
+    if (listWidth + transX < containerWidth) {
+      document.querySelector('.viewer-list-next').style.display = 'none';
+    } else {
+      document.querySelector('.viewer-list-next').style.display = 'block';
+    }
   }
 };
 
@@ -3277,3 +3319,4 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 export { Viewer as default };
+//# sourceMappingURL=viewer.esm.js.map
