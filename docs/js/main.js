@@ -70,7 +70,8 @@ window.onload = function () {
       divider2:true,
       oneToOne: true,      
     },
-    title:false
+    title: false,
+    initialCoverage:1
   };
   var viewer = new Viewer(pictures, options);
 

@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-11T01:08:25.785Z
+ * Date: 2024-03-19T03:08:03.604Z
  */
 
 (function (global, factory) {
@@ -1084,16 +1084,17 @@
       var transX = (this.viewerData.width - offsetWidth) / 2 - outerWidth * index;
       if (transX > 0) {
         transX = 0;
-        document.querySelector('.viewer-list-prev').style.display = 'none';
-      } else {
-        document.querySelector('.viewer-list-prev').style.display = 'block';
       }
+      //   document.querySelector('.viewer-list-prev').style.display = 'none';
+      // } else {
+      //   document.querySelector('.viewer-list-prev').style.display = 'block';      
+      // }
       var listWidth = outerWidth * this.length - gutter;
-      if (listWidth + transX < this.containerData.width) {
-        document.querySelector('.viewer-list-next').style.display = 'none';
-      } else {
-        document.querySelector('.viewer-list-next').style.display = 'block';
-      }
+      // if (listWidth + transX < this.containerData.width) {
+      //   document.querySelector('.viewer-list-next').style.display = 'none';
+      // } else {
+      //   document.querySelector('.viewer-list-next').style.display = 'block';      
+      // }
 
       // Place the active item in the center of the screen
       setStyle(this.list, assign({
@@ -1101,6 +1102,7 @@
       }, getTransforms({
         translateX: transX
       })));
+      this.setPrevNextVisible(this);
     },
     resetList: function resetList() {
       var list = this.list;
@@ -1115,7 +1117,7 @@
       var options = this.options,
         image = this.image,
         viewerData = this.viewerData;
-      var footerHeight = this.navbar.offsetHeight; //  this.footer.offsetHeight;
+      var footerHeight = this.options._navbar === undefined || this.options._navbar === true ? this.navbar.offsetHeight : 0; //  this.footer.offsetHeight;
       var viewerWidth = viewerData.width;
       var viewerHeight = Math.max(viewerData.height - footerHeight, footerHeight);
       var oldImageData = this.imageData || {};
@@ -1981,6 +1983,7 @@
      */
     prev: function prev() {
       var loop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      this.removeClassOne();
       var index = this.index - 1;
       if (index < 0) {
         index = loop ? this.length - 1 : 0;
@@ -1996,6 +1999,7 @@
      */
     next: function next() {
       var loop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      this.removeClassOne();
       var maxIndex = this.length - 1;
       var index = this.index + 1;
       if (index > maxIndex) {
@@ -2166,6 +2170,7 @@
     scale: function scale(scaleX) {
       var _this5 = this;
       var scaleY = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : scaleX;
+      this.removeClassOne();
       var element = this.element,
         options = this.options,
         imageData = this.imageData;
@@ -2259,6 +2264,7 @@
       var pivot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var _originalEvent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
       var _zoomable = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+      this.removeClassOne();
       var element = this.element,
         options = this.options,
         pointers = this.pointers,
@@ -2363,6 +2369,7 @@
     play: function play() {
       var _this7 = this;
       var fullscreen = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      this.removeClassOne();
       if (!this.isShown || this.played) {
         return this;
       }
@@ -2623,6 +2630,11 @@
       }
       return this;
     },
+    removeClassOne: function removeClassOne() {
+      var viewer = this.viewer;
+      var one = viewer.querySelector(".".concat(NAMESPACE, "-one-to-one"));
+      removeClass(one, CLASS_ONE);
+    },
     // Reset the image to its initial state
     reset: function reset() {
       if (this.viewed && !this.played) {
@@ -2755,14 +2767,27 @@
       return this;
     },
     toggleNavbar: function toggleNavbar() {
+      var _this13 = this;
+      this.removeClassOne();
       console.log(this.options.navbar, this);
       // this.options.navbar = !this.options.navbar;
       if (this.options._navbar === undefined) {
         this.options._navbar = this.options.navbar;
       }
       this.options._navbar = !this.options._navbar;
-      setStyle(this.navbar, {
-        display: this.options._navbar ? '' : 'none'
+      if (this.options._navbar) {
+        setStyle(this.navbar, {
+          visibility: 'visible',
+          position: 'relative'
+        });
+      } else {
+        setStyle(this.navbar, {
+          visibility: 'hidden',
+          position: 'fixed'
+        });
+      }
+      this.initImage(function () {
+        _this13.renderImage();
       });
     },
     pagePrev: function pagePrev() {
@@ -2778,7 +2803,7 @@
       setStyle(this.list, {
         transform: "translateX(".concat(x, "px)")
       });
-      this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+      this.setPrevNextVisible(this);
     },
     pageNext: function pageNext() {
       var _window$getComputedSt2;
@@ -2794,19 +2819,25 @@
       setStyle(this.list, {
         transform: "translateX(".concat(x, "px)")
       });
-      this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+      this.setPrevNextVisible(this);
     },
-    setPrevNextVisible: function setPrevNextVisible(transX, containerWidth, listWidth) {
-      if (transX >= 0) {
-        document.querySelector('.viewer-list-prev').style.display = 'none';
-      } else {
-        document.querySelector('.viewer-list-prev').style.display = 'block';
-      }
-      if (listWidth + transX < containerWidth) {
-        document.querySelector('.viewer-list-next').style.display = 'none';
-      } else {
-        document.querySelector('.viewer-list-next').style.display = 'block';
-      }
+    setPrevNextVisible: function setPrevNextVisible(that) {
+      setTimeout(function () {
+        var _that$list$getBoundin = that.list.getBoundingClientRect(),
+          left = _that$list$getBoundin.left,
+          right = _that$list$getBoundin.right;
+        if (left < 0) {
+          that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
+        } else {
+          that.navbar.querySelector('.viewer-list-prev').style.display = 'none';
+        }
+        var containerWidth = that.navbar.clientWidth;
+        if (right > containerWidth) {
+          that.navbar.querySelector('.viewer-list-next').style.display = 'block';
+        } else {
+          that.navbar.querySelector('.viewer-list-next').style.display = 'none';
+        }
+      }, 10);
     }
   };
 

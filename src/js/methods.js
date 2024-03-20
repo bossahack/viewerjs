@@ -390,7 +390,8 @@ export default {
    * when it is the first one at present.
    * @returns {Viewer} this
    */
-  prev(loop = false) {
+  prev (loop = false) {
+    this.removeClassOne();
     let index = this.index - 1;
 
     if (index < 0) {
@@ -408,6 +409,7 @@ export default {
    * @returns {Viewer} this
    */
   next(loop = false) {
+    this.removeClassOne();
     const maxIndex = this.length - 1;
     let index = this.index + 1;
 
@@ -602,6 +604,7 @@ export default {
    * @returns {Viewer} this
    */
   scale(scaleX, scaleY = scaleX) {
+    this.removeClassOne();
     const { element, options, imageData } = this;
 
     scaleX = Number(scaleX);
@@ -706,6 +709,7 @@ export default {
    * @returns {Viewer} this
    */
   zoomTo(ratio, showTooltip = false, pivot = null, _originalEvent = null, _zoomable = false) {
+    this.removeClassOne();
     const {
       element,
       options,
@@ -832,6 +836,7 @@ export default {
    * @returns {Viewer} this
    */
   play(fullscreen = false) {
+    this.removeClassOne();
     if (!this.isShown || this.played) {
       return this;
     }
@@ -1139,6 +1144,12 @@ export default {
     return this;
   },
 
+  removeClassOne () {
+    const { viewer } = this;
+    const one=viewer.querySelector(`.${NAMESPACE}-one-to-one`)
+    removeClass(one, CLASS_ONE);
+  },
+
   // Reset the image to its initial state
   reset() {
     if (this.viewed && !this.played) {
@@ -1294,14 +1305,26 @@ export default {
     return this;
   },
   toggleNavbar () {
+    this.removeClassOne();
     console.log(this.options.navbar, this)
     // this.options.navbar = !this.options.navbar;
     if (this.options._navbar === undefined) {
       this.options._navbar = this.options.navbar;
     }
     this.options._navbar = !this.options._navbar;
-    setStyle(this.navbar, {
-      display:this.options._navbar?'':'none',
+    if (this.options._navbar) {
+      setStyle(this.navbar, {
+        visibility: 'visible',
+        position:'relative'
+      });
+    } else {
+      setStyle(this.navbar, {
+        visibility: 'hidden',
+        position:'fixed'
+      });
+    }
+    this.initImage(() => {
+      this.renderImage();
     });
   },
   pagePrev () {
@@ -1316,7 +1339,7 @@ export default {
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
-    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+    this.setPrevNextVisible(this);
   },
   pageNext () {
     console.log(this.options.navbar, this)
@@ -1332,18 +1355,23 @@ export default {
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
-    this.setPrevNextVisible(x, this.containerData.width, this.list.offsetWidth);
+    this.setPrevNextVisible(this);
   },
-  setPrevNextVisible (transX,containerWidth,listWidth) {
-    if (transX >= 0) {
-      document.querySelector('.viewer-list-prev').style.display = 'none';
-    } else {
-      document.querySelector('.viewer-list-prev').style.display = 'block';      
-    }
-    if (listWidth + transX < containerWidth) {
-      document.querySelector('.viewer-list-next').style.display = 'none';
-    } else {
-      document.querySelector('.viewer-list-next').style.display = 'block';      
-    }
+  setPrevNextVisible (that) {
+    setTimeout(() => {
+      let { left, right } = that.list.getBoundingClientRect();
+      if (left<0) {
+        that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
+      } else {
+        that.navbar.querySelector('.viewer-list-prev').style.display = 'none';      
+      }
+      let containerWidth=that.navbar.clientWidth
+      if (right > containerWidth) {
+        that.navbar.querySelector('.viewer-list-next').style.display = 'block';
+      } else {
+        that.navbar.querySelector('.viewer-list-next').style.display = 'none';      
+      }
+    }, 10);
+    
   }
 };

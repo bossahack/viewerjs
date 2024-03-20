@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-11T02:25:35.068Z
+ * Date: 2024-03-19T03:08:03.644Z
  */
 
 .viewer-zoom-in::before, .viewer-zoom-out::before, .viewer-one-to-one::before, .viewer-reset::before, .viewer-prev::before, .viewer-play::before, .viewer-next::before, .viewer-rotate-left::before, .viewer-rotate-right::before, .viewer-flip-horizontal::before, .viewer-flip-vertical::before, .viewer-fullscreen::before, .viewer-fullscreen-exit::before, .viewer-close::before {
@@ -193,8 +193,9 @@
   box-sizing: content-box;
   height: 80px;
   margin: 0;
+  margin: 0 auto;
   overflow: hidden;
-  padding: 1px 0;
+  padding: 10px 0;
 }
 
 .viewer-list > li {
@@ -246,7 +247,7 @@
 .viewer-list-prev,
 .viewer-list-next {
   bottom: 0;
-  height: 81px;
+  height: 100px;
   position: absolute;
   width: 73px;
 }
@@ -267,7 +268,7 @@
     height: 20px;
     position: absolute;
     right: 30px;
-    top: 28px;
+    top: 40px;
     width: 20px;
   }
 
@@ -287,7 +288,7 @@
     height: 20px;
     left: 30px;
     position: absolute;
-    top: 28px;
+    top: 40px;
     width: 20px;
   }
 
@@ -431,8 +432,8 @@
   }
 
 .viewer-button::before {
-    bottom: 15px;
-    left: 15px;
+    bottom: 14px;
+    left: 14px;
     position: absolute;
   }
 
@@ -504,7 +505,7 @@
 }
 
 .viewer-transition {
-  transition: all 0.3s;
+  transition: all 0.01s;
 }
 
 @keyframes viewer-spinner {

@@ -146,6 +146,7 @@
     min-height: 0 !important;
     min-width: 0 !important;
     width: 100%;
+
   }
 }
 
@@ -184,7 +185,8 @@
   height: 80px;
   margin: 0;
   overflow: hidden;
-  padding: 1px 0;
+  padding: 10px 0;
+  margin: 0 auto;
 
   & > li {
     color: transparent;
@@ -236,7 +238,7 @@
   position: absolute;
   bottom: 0;
   width: 73px;
-  height: 81px;
+  height: 100px;
   
 }
 .viewer-list-prev{
@@ -254,7 +256,7 @@
     width: 20px;
     position: absolute;
     right: 30px;
-    top: 28px;
+    top: 40px;
   }
 }
 .viewer-list-next{
@@ -272,7 +274,7 @@
     width: 20px;
     position: absolute;
     left: 30px;
-    top: 28px;
+    top: 40px;
   }
 }
 
@@ -416,8 +418,8 @@
   }
 
   &::before {
-    bottom: 15px;
-    left: 15px;
+    bottom: 14px;
+    left: 14px;
     position: absolute;
   }
 }
@@ -489,7 +491,7 @@
 }
 
 .viewer-transition {
-  transition: all 0.3s;
+  transition: all 0.01s;
 }
 
 @keyframes viewer-spinner {

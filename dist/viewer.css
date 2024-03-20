@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-12T09:46:00.086Z
+ * Date: 2024-03-18T11:24:31.172Z
  */
 
 .viewer-zoom-in::before, .viewer-zoom-out::before, .viewer-one-to-one::before, .viewer-reset::before, .viewer-prev::before, .viewer-play::before, .viewer-next::before, .viewer-rotate-left::before, .viewer-rotate-right::before, .viewer-flip-horizontal::before, .viewer-flip-vertical::before, .viewer-fullscreen::before, .viewer-fullscreen-exit::before, .viewer-close::before {
@@ -193,6 +193,7 @@
   box-sizing: content-box;
   height: 80px;
   margin: 0;
+  margin: 0 auto;
   overflow: hidden;
   padding: 1px 0;
 }
@@ -310,10 +311,10 @@
   }
 
 .viewer-toolbar > ul {
-    background-color: #808080;
+    background-color: rgb(153 153 153 / 80%);
     border-radius: 26px;
     display: inline-block;
-    margin: 0 auto 5px;
+    margin: 0 auto 20px;
     overflow: hidden;
     padding: 12px 0;
   }
@@ -413,7 +414,7 @@
 
 .viewer-button {
   -webkit-app-region: no-drag;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(153 153 153 / 60%);
   border-radius: 50%;
   cursor: pointer;
   height: 48px;
@@ -424,11 +425,6 @@
   transition: background-color 0.15s;
   width: 48px;
 }
-
-.viewer-button:focus,
-  .viewer-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
 
 .viewer-button:focus {
     box-shadow: 0 0 3px #fff;
@@ -442,7 +438,7 @@
   }
 
 .viewer-button-prev {
-  background-color: #80808099;
+  background-color: rgb(153 153 153 / 60%);
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAMAAADQmBKKAAAAV1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////+ORg7oAAAAHHRSTlMAdf1evU4T6KB8ZQzs38qxcjr506ZubUk+MB4FRtS6rwAAARhJREFUeNrt21lOw0AQRdEX8IDjjMyD979OiFBkKRZVwAf1hO5ZwVWX3f1VAgAAAIDvGof9bn/o5GK9mU42rTysprNrOZh7pn5UvY+e2YPKnXpmNyoQ9EyNqsw9Vid07nH5zRY921GFlj1XzyoQ9PxoYPTE6InRE6MnRk+Mnhg9MXpi9MToidEToydGT4yeGD0xemL0/LFHs56XW68e7cx6OrMePZn16OgW9Oo2MjVuRUeza0g62BW5PR0UUUTRFyjKUZSjKEdRjqIcRTmKchTlKMpRlKMoR1GOohxFBZZFrQpERds3FYiK1vqdf7tG4bdocll0r3orq2/ooqj3WMKbi1p5aPvP83HpkbqhuWsGj3kBAAAAqPIOSsKq7/INj34AAAAASUVORK5CYII=);
   background-position: center;
   background-repeat: no-repeat;
@@ -457,7 +453,7 @@
 }
 
 .viewer-button-next {
-  background-color: #80808099;
+  background-color: rgb(153 153 153 / 60%);
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAMAAADQmBKKAAAAUVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////8IN+deAAAAGnRSTlMAdf1fYF7qT6NwEr464Mm7fmcZDQjTsa5HL39ZbX8AAAEPSURBVHja7dtJbsJAEEbhAhwb24Q5U93/oFEWhA2qUi9K/MD7TvCkllrqoQwAAADASzuOn9uvxclUDL3/6TvTsPKLhSk4965VNLprFa1drGh2saK1ixV1LlZ0elcr2izVilYUUUTRLRTlKMpRlKMoR1HuBYo6iiii6BaKchTlKMpRlKMoR1GDuqLRmtQXLX+sSX3R1trUF03Wprzo20q1H9c21qh6yY7WrPQ4u7NieY/SiqltjGrXD/TQQ88/emL0xOiJ0ROjJ0ZPjJ4YPbGn73mjhx56LuiJ0RN7+p5BrOes9gX+INajN0axE+vRG8U5iPXYpDbOZYNYz3UkcDAV037+mPd3f0MFAAAA8Dh+ARkNn0tICSPqAAAAAElFTkSuQmCC);
   background-position: center;
   background-repeat: no-repeat;
@@ -488,7 +484,7 @@
 }
 
 .viewer-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .viewer-invisible {
@@ -509,7 +505,7 @@
 }
 
 .viewer-transition {
-  transition: all 0.3s;
+  transition: all 0.01s;
 }
 
 @keyframes viewer-spinner {

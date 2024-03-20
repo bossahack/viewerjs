@@ -177,16 +177,17 @@ export default {
     let transX = ((this.viewerData.width - offsetWidth) / 2) - outerWidth * index;
     if (transX > 0) {
       transX = 0;
-      document.querySelector('.viewer-list-prev').style.display = 'none';
-    } else {
-      document.querySelector('.viewer-list-prev').style.display = 'block';      
     }
+    //   document.querySelector('.viewer-list-prev').style.display = 'none';
+    // } else {
+    //   document.querySelector('.viewer-list-prev').style.display = 'block';      
+    // }
     let listWidth = outerWidth * this.length - gutter;
-    if (listWidth + transX < this.containerData.width) {
-      document.querySelector('.viewer-list-next').style.display = 'none';
-    } else {
-      document.querySelector('.viewer-list-next').style.display = 'block';      
-    }
+    // if (listWidth + transX < this.containerData.width) {
+    //   document.querySelector('.viewer-list-next').style.display = 'none';
+    // } else {
+    //   document.querySelector('.viewer-list-next').style.display = 'block';      
+    // }
 
     // Place the active item in the center of the screen
     setStyle(this.list, assign({
@@ -194,6 +195,7 @@ export default {
     }, getTransforms({
       translateX: transX,
     })));
+    this.setPrevNextVisible(this)
   },
 
   resetList() {
@@ -208,7 +210,7 @@ export default {
 
   initImage(done) {
     const { options, image, viewerData } = this;
-    const footerHeight = this.navbar.offsetHeight;//  this.footer.offsetHeight;
+    const footerHeight =(this.options._navbar===undefined || this.options._navbar===true)? this.navbar.offsetHeight:0;//  this.footer.offsetHeight;
     const viewerWidth = viewerData.width;
     const viewerHeight = Math.max(viewerData.height - footerHeight, footerHeight);
     const oldImageData = this.imageData || {};
