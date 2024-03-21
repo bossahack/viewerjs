@@ -1103,6 +1103,7 @@ var render = {
     setStyle(list, getTransforms({
       translateX: 0
     }));
+    this.listScroll();
   },
   initImage: function initImage(done) {
     var _this2 = this;
@@ -1207,6 +1208,10 @@ var render = {
       this.image = null;
       this.title.innerHTML = '';
     }
+  },
+  listScroll: function listScroll() {
+    var list = this.list;
+    console.log(list);
   }
 };
 

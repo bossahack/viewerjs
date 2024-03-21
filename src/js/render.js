@@ -204,6 +204,7 @@ export default {
     setStyle(list, getTransforms({
       translateX: 0,
     }));
+    this.listScroll();
   },
 
   initImage(done) {
@@ -326,4 +327,8 @@ export default {
       this.title.innerHTML = '';
     }
   },
+  listScroll () {
+    const { list } = this;
+    console.log(list)
+  }
 };
