@@ -89,7 +89,7 @@ class Viewer {
     this.init();
   }
 
-  init() {
+  init () {
     const { element, options } = this;
 
     if (element[NAMESPACE]) {

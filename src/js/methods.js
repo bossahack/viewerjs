@@ -208,6 +208,8 @@ export default {
     this.options._navbar = undefined;
     setStyle(this.navbar, {
       display:'block',
+      visibility: 'visible',
+      position:'relative'
     });
 
     return this;
@@ -798,12 +800,15 @@ export default {
         imageData.y -= offsetHeight / 2;
       }
 
-      imageData.left = imageData.x;
-      imageData.top = imageData.y;
       imageData.width = newWidth;
       imageData.height = newHeight;
       imageData.oldRatio = oldRatio;
       imageData.ratio = ratio;
+      console.log(imageData)
+      this.fixImageData(imageData)
+      console.log(imageData)
+      imageData.left = imageData.x;
+      imageData.top = imageData.y;
       this.renderImage(() => {
         this.zooming = false;
 
@@ -828,6 +833,22 @@ export default {
     }
 
     return this;
+  },
+
+  fixImageData (imageData) {
+    if (imageData.x > this.viewerData.width) {
+      imageData.x = this.viewerData.width -100;
+    }
+    if (imageData.x < -imageData.width) {
+      imageData.x = -imageData.width+100;
+    }
+    let imageContainerHeight = this.viewerData.height - this.footer.clientHeight;
+    if (imageData.y > imageContainerHeight) {
+      imageData.y = imageContainerHeight -100;
+    }
+    if (imageData.y < -imageData.height) {
+      imageData.y = -this.imageData.height +100;
+    }
   },
 
   /**

@@ -73,7 +73,7 @@ window.onload = function () {
     title: false,
     initialCoverage:1
   };
-  var viewer = new Viewer(pictures, options);
+  var viewer = window.viewer = new Viewer(pictures, options);
 
   function toggleButtons(mode) {
     var targets;

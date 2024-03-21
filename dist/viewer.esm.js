@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-21T02:22:06.912Z
+ * Date: 2024-03-21T03:04:29.274Z
  */
 
 function ownKeys(e, r) {
@@ -1820,7 +1820,9 @@ var methods = {
     }
     this.options._navbar = undefined;
     setStyle(this.navbar, {
-      display: 'block'
+      display: 'block',
+      visibility: 'visible',
+      position: 'relative'
     });
     return this;
   },
@@ -2324,12 +2326,15 @@ var methods = {
         imageData.x -= offsetWidth / 2;
         imageData.y -= offsetHeight / 2;
       }
-      imageData.left = imageData.x;
-      imageData.top = imageData.y;
       imageData.width = newWidth;
       imageData.height = newHeight;
       imageData.oldRatio = oldRatio;
       imageData.ratio = ratio;
+      console.log(imageData);
+      this.fixImageData(imageData);
+      console.log(imageData);
+      imageData.left = imageData.x;
+      imageData.top = imageData.y;
       this.renderImage(function () {
         _this6.zooming = false;
         if (isFunction(options.zoomed)) {
@@ -2350,6 +2355,21 @@ var methods = {
       }
     }
     return this;
+  },
+  fixImageData: function fixImageData(imageData) {
+    if (imageData.x > this.viewerData.width) {
+      imageData.x = this.viewerData.width - 100;
+    }
+    if (imageData.x < -imageData.width) {
+      imageData.x = -imageData.width + 100;
+    }
+    var imageContainerHeight = this.viewerData.height - this.footer.clientHeight;
+    if (imageData.y > imageContainerHeight) {
+      imageData.y = imageContainerHeight - 100;
+    }
+    if (imageData.y < -imageData.height) {
+      imageData.y = -this.imageData.height + 100;
+    }
   },
   /**
    * Play the images
@@ -3352,3 +3372,4 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 export { Viewer as default };
+//# sourceMappingURL=viewer.esm.js.map
