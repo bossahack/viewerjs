@@ -174,20 +174,18 @@ export default {
     const { offsetWidth } = item;
     const outerWidth = offsetWidth + gutter;
 
-    let transX = ((this.viewerData.width - offsetWidth) / 2) - outerWidth * index;
+    let transX = ((this.viewerData.width - offsetWidth) / 2) - outerWidth * index;    
     if (transX > 0) {
       transX = 0;
     }
-    //   document.querySelector('.viewer-list-prev').style.display = 'none';
-    // } else {
-    //   document.querySelector('.viewer-list-prev').style.display = 'block';      
-    // }
+    
     let listWidth = outerWidth * this.length - gutter;
-    // if (listWidth + transX < this.containerData.width) {
-    //   document.querySelector('.viewer-list-next').style.display = 'none';
-    // } else {
-    //   document.querySelector('.viewer-list-next').style.display = 'block';      
-    // }
+    let min = this.viewerData.width - listWidth ;
+    console.log('min',min,transX)
+    if (transX<0 && transX < min) transX = min;
+    console.log(transX)
+    if (listWidth < this.viewerData.width) transX = 0;
+  
 
     // Place the active item in the center of the screen
     setStyle(this.list, assign({

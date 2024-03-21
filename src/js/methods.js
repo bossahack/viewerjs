@@ -1336,6 +1336,12 @@ export default {
     if (x > 0) {
       x=0      
     }
+    let min = this.viewerData.width - this.list.offsetWidth ;
+    console.log('min',min,x)
+    if (x<0 && x < min) x = min;
+    console.log(x)
+    if (this.list.offsetWidth < this.viewerData.width) x = 0;
+  
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
@@ -1347,11 +1353,12 @@ export default {
     let fullWidth = this.navbar.offsetWidth-70*2;
     let x = +currentX - fullWidth;
 
-    const item = this.items[this.index];
-    const gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);
-    let min = this.list.offsetWidth - fullWidth / 2 - gutter / 2;
-    console.log('min'+min)
-    if (x < -min) x = -min;
+    let min = this.viewerData.width - this.list.offsetWidth ;
+    console.log('min',min,x)
+    if (x<0 && x < min) x = min;
+    console.log(x)
+    if (this.list.offsetWidth < this.viewerData.width) x = 0;
+  
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
@@ -1360,6 +1367,7 @@ export default {
   setPrevNextVisible (that) {
     setTimeout(() => {
       let { left, right } = that.list.getBoundingClientRect();
+      console.log(left,right)
       if (left<0) {
         that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
       } else {
@@ -1371,7 +1379,7 @@ export default {
       } else {
         that.navbar.querySelector('.viewer-list-next').style.display = 'none';      
       }
-    }, 10);
+    }, 100);
     
   }
 };

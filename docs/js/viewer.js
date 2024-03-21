@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-19T03:08:03.604Z
+ * Date: 2024-03-21T02:22:06.912Z
  */
 
 (function (global, factory) {
@@ -1085,16 +1085,12 @@
       if (transX > 0) {
         transX = 0;
       }
-      //   document.querySelector('.viewer-list-prev').style.display = 'none';
-      // } else {
-      //   document.querySelector('.viewer-list-prev').style.display = 'block';      
-      // }
       var listWidth = outerWidth * this.length - gutter;
-      // if (listWidth + transX < this.containerData.width) {
-      //   document.querySelector('.viewer-list-next').style.display = 'none';
-      // } else {
-      //   document.querySelector('.viewer-list-next').style.display = 'block';      
-      // }
+      var min = this.viewerData.width - listWidth;
+      console.log('min', min, transX);
+      if (transX < 0 && transX < min) transX = min;
+      console.log(transX);
+      if (listWidth < this.viewerData.width) transX = 0;
 
       // Place the active item in the center of the screen
       setStyle(this.list, assign({
@@ -2800,6 +2796,11 @@
       if (x > 0) {
         x = 0;
       }
+      var min = this.viewerData.width - this.list.offsetWidth;
+      console.log('min', min, x);
+      if (x < 0 && x < min) x = min;
+      console.log(x);
+      if (this.list.offsetWidth < this.viewerData.width) x = 0;
       setStyle(this.list, {
         transform: "translateX(".concat(x, "px)")
       });
@@ -2811,11 +2812,11 @@
       var currentX = ((_window$getComputedSt2 = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt2 === void 0 ? void 0 : _window$getComputedSt2[4]) || 0;
       var fullWidth = this.navbar.offsetWidth - 70 * 2;
       var x = +currentX - fullWidth;
-      var item = this.items[this.index];
-      var gutter = item.offsetWidth + parseInt(window.getComputedStyle(item).marginLeft, 10);
-      var min = this.list.offsetWidth - fullWidth / 2 - gutter / 2;
-      console.log('min' + min);
-      if (x < -min) x = -min;
+      var min = this.viewerData.width - this.list.offsetWidth;
+      console.log('min', min, x);
+      if (x < 0 && x < min) x = min;
+      console.log(x);
+      if (this.list.offsetWidth < this.viewerData.width) x = 0;
       setStyle(this.list, {
         transform: "translateX(".concat(x, "px)")
       });
@@ -2826,6 +2827,7 @@
         var _that$list$getBoundin = that.list.getBoundingClientRect(),
           left = _that$list$getBoundin.left,
           right = _that$list$getBoundin.right;
+        console.log(left, right);
         if (left < 0) {
           that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
         } else {
@@ -2837,7 +2839,7 @@
         } else {
           that.navbar.querySelector('.viewer-list-next').style.display = 'none';
         }
-      }, 10);
+      }, 100);
     }
   };
 
@@ -3358,4 +3360,3 @@
   return Viewer;
 
 }));
-//# sourceMappingURL=viewer.js.map
