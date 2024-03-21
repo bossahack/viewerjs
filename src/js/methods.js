@@ -804,9 +804,7 @@ export default {
       imageData.height = newHeight;
       imageData.oldRatio = oldRatio;
       imageData.ratio = ratio;
-      console.log(imageData)
       this.fixImageData(imageData)
-      console.log(imageData)
       imageData.left = imageData.x;
       imageData.top = imageData.y;
       this.renderImage(() => {

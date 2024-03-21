@@ -329,6 +329,27 @@ export default {
   },
   listScroll () {
     const { list } = this;
+    if(!list) return
     console.log(list)
+    const isDragging = false;
+    let startX, startY, lastX, lastY;
+    list.addListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      lastX = startX;
+      console.log(isDragging)
+    })
+    list.addListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const diffX = e.clientX - lastX;
+      console.log(diffX)
+      // content.style.left = `${parseInt(content.style.left || '0', 10) + diffX}px`;
+      // content.style.top = `${parseInt(content.style.top || '0', 10) + diffY}px`;
+      lastX = e.clientX;
+    })
+    list.addListener('mousedown', (e) => {
+      isDragging = false;
+      console.log(movable)
+    })
   }
 };

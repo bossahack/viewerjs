@@ -90,6 +90,9 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+function _readOnlyError(name) {
+  throw new TypeError("\"" + name + "\" is read-only");
+}
 
 var DEFAULTS = {
   /**
@@ -1211,7 +1214,21 @@ var render = {
   },
   listScroll: function listScroll() {
     var list = this.list;
+    if (!list) return;
     console.log(list);
+    var isDragging = false;
+    list.addListener('mousedown', function (e) {
+      _readOnlyError("isDragging");
+      e.clientX;
+      console.log(isDragging);
+    });
+    list.addListener('mousemove', function (e) {
+      return;
+    });
+    list.addListener('mousedown', function (e) {
+      _readOnlyError("isDragging");
+      console.log(movable);
+    });
   }
 };
 
@@ -2337,9 +2354,7 @@ var methods = {
       imageData.height = newHeight;
       imageData.oldRatio = oldRatio;
       imageData.ratio = ratio;
-      console.log(imageData);
       this.fixImageData(imageData);
-      console.log(imageData);
       imageData.left = imageData.x;
       imageData.top = imageData.y;
       this.renderImage(function () {
