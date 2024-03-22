@@ -211,6 +211,9 @@ export default {
       visibility: 'visible',
       position:'relative'
     });
+    
+    const btnToggle=this.viewer.querySelector(`.${NAMESPACE}-toogle-navbar`)
+    removeClass(btnToggle,'hide-navbar')
 
     return this;
   },
@@ -1331,26 +1334,32 @@ export default {
       this.options._navbar = this.options.navbar;
     }
     this.options._navbar = !this.options._navbar;
+    const btnToggle=this.viewer.querySelector(`.${NAMESPACE}-toogle-navbar`)
     if (this.options._navbar) {
       setStyle(this.navbar, {
         visibility: 'visible',
         position:'relative'
       });
+      removeClass(btnToggle,'hide-navbar')
     } else {
       setStyle(this.navbar, {
         visibility: 'hidden',
         position:'fixed'
       });
+      addClass(btnToggle,'hide-navbar')
     }
     this.initImage(() => {
       this.renderImage();
     });
   },
-  pagePrev () {
+  pagePrev (transWidth) {
     console.log(this.options.navbar, this)
     let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
     let fullWidth = this.navbar.offsetWidth-70*2;
-    let x = +currentX + fullWidth;
+    if (!transWidth) {
+      transWidth=fullWidth;
+    }
+    let x = +currentX + transWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
     if (x > 0) {
       x=0      
@@ -1366,11 +1375,14 @@ export default {
     });
     this.setPrevNextVisible(this);
   },
-  pageNext () {
+  pageNext (transWidth) {
     console.log(this.options.navbar, this)
     let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
-    let fullWidth = this.navbar.offsetWidth-70*2;
-    let x = +currentX - fullWidth;
+    let fullWidth = this.navbar.offsetWidth - 70 * 2;
+    if (!transWidth) {
+      transWidth=fullWidth
+    }
+    let x = +currentX - transWidth;
 
     let min = this.viewerData.width - this.list.offsetWidth ;
     console.log('min',min,x)
@@ -1386,7 +1398,6 @@ export default {
   setPrevNextVisible (that) {
     setTimeout(() => {
       let { left, right } = that.list.getBoundingClientRect();
-      console.log(left,right)
       if (left<0) {
         that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
       } else {

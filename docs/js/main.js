@@ -9,6 +9,7 @@ window.onload = function () {
   var options = {
     // inline: true,
     url: 'data-original',
+    wheelSpeed:300,
     ready: function (e) {
       console.log(e.type);
     },
@@ -149,3 +150,4 @@ window.onload = function () {
 
   $('[data-toggle="tooltip"]').tooltip();
 };
+document.querySelector('body').append(window.navigator.userAgent.toLowerCase() )

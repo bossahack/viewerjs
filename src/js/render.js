@@ -181,9 +181,7 @@ export default {
     
     let listWidth = outerWidth * this.length - gutter;
     let min = this.viewerData.width - listWidth ;
-    console.log('min',min,transX)
     if (transX<0 && transX < min) transX = min;
-    console.log(transX)
     if (listWidth < this.viewerData.width) transX = 0;
   
 
@@ -204,7 +202,6 @@ export default {
     setStyle(list, getTransforms({
       translateX: 0,
     }));
-    this.listScroll();
   },
 
   initImage(done) {
@@ -326,30 +323,5 @@ export default {
       this.image = null;
       this.title.innerHTML = '';
     }
-  },
-  listScroll () {
-    const { list } = this;
-    if(!list) return
-    console.log(list)
-    const isDragging = false;
-    let startX, startY, lastX, lastY;
-    list.addListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      lastX = startX;
-      console.log(isDragging)
-    })
-    list.addListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const diffX = e.clientX - lastX;
-      console.log(diffX)
-      // content.style.left = `${parseInt(content.style.left || '0', 10) + diffX}px`;
-      // content.style.top = `${parseInt(content.style.top || '0', 10) + diffY}px`;
-      lastX = e.clientX;
-    })
-    list.addListener('mousedown', (e) => {
-      isDragging = false;
-      console.log(movable)
-    })
   }
 };

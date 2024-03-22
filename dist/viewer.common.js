@@ -90,9 +90,6 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _readOnlyError(name) {
-  throw new TypeError("\"" + name + "\" is read-only");
-}
 
 var DEFAULTS = {
   /**
@@ -1086,9 +1083,7 @@ var render = {
     }
     var listWidth = outerWidth * this.length - gutter;
     var min = this.viewerData.width - listWidth;
-    console.log('min', min, transX);
     if (transX < 0 && transX < min) transX = min;
-    console.log(transX);
     if (listWidth < this.viewerData.width) transX = 0;
 
     // Place the active item in the center of the screen
@@ -1106,7 +1101,6 @@ var render = {
     setStyle(list, getTransforms({
       translateX: 0
     }));
-    this.listScroll();
   },
   initImage: function initImage(done) {
     var _this2 = this;
@@ -1211,24 +1205,6 @@ var render = {
       this.image = null;
       this.title.innerHTML = '';
     }
-  },
-  listScroll: function listScroll() {
-    var list = this.list;
-    if (!list) return;
-    console.log(list);
-    var isDragging = false;
-    list.addListener('mousedown', function (e) {
-      _readOnlyError("isDragging");
-      e.clientX;
-      console.log(isDragging);
-    });
-    list.addListener('mousemove', function (e) {
-      return;
-    });
-    list.addListener('mousedown', function (e) {
-      _readOnlyError("isDragging");
-      console.log(movable);
-    });
   }
 };
 
@@ -1693,6 +1669,14 @@ var handlers = {
     setTimeout(function () {
       _this4.wheeling = false;
     }, 50);
+    if (event.target.offsetParent === this.footer || event.target.offsetParent === this.list || event.target === this.list) {
+      if (event.deltaY < 0) {
+        this.pagePrev(this.options.wheelSpeed || 150);
+      } else {
+        this.pageNext(this.options.wheelSpeed || 150);
+      }
+      return;
+    }
     var ratio = Number(this.options.zoomRatio) || 0.1;
     var delta = 1;
     if (event.deltaY) {
@@ -1848,6 +1832,8 @@ var methods = {
       visibility: 'visible',
       position: 'relative'
     });
+    var btnToggle = this.viewer.querySelector(".".concat(NAMESPACE, "-toogle-navbar"));
+    removeClass(btnToggle, 'hide-navbar');
     return this;
   },
   /**
@@ -2807,27 +2793,33 @@ var methods = {
       this.options._navbar = this.options.navbar;
     }
     this.options._navbar = !this.options._navbar;
+    var btnToggle = this.viewer.querySelector(".".concat(NAMESPACE, "-toogle-navbar"));
     if (this.options._navbar) {
       setStyle(this.navbar, {
         visibility: 'visible',
         position: 'relative'
       });
+      removeClass(btnToggle, 'hide-navbar');
     } else {
       setStyle(this.navbar, {
         visibility: 'hidden',
         position: 'fixed'
       });
+      addClass(btnToggle, 'hide-navbar');
     }
     this.initImage(function () {
       _this13.renderImage();
     });
   },
-  pagePrev: function pagePrev() {
+  pagePrev: function pagePrev(transWidth) {
     var _window$getComputedSt;
     console.log(this.options.navbar, this);
     var currentX = ((_window$getComputedSt = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt === void 0 ? void 0 : _window$getComputedSt[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
-    var x = +currentX + fullWidth;
+    if (!transWidth) {
+      transWidth = fullWidth;
+    }
+    var x = +currentX + transWidth;
     if (x > fullWidth / 2) x = fullWidth / 2;
     if (x > 0) {
       x = 0;
@@ -2842,12 +2834,15 @@ var methods = {
     });
     this.setPrevNextVisible(this);
   },
-  pageNext: function pageNext() {
+  pageNext: function pageNext(transWidth) {
     var _window$getComputedSt2;
     console.log(this.options.navbar, this);
     var currentX = ((_window$getComputedSt2 = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt2 === void 0 ? void 0 : _window$getComputedSt2[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
-    var x = +currentX - fullWidth;
+    if (!transWidth) {
+      transWidth = fullWidth;
+    }
+    var x = +currentX - transWidth;
     var min = this.viewerData.width - this.list.offsetWidth;
     console.log('min', min, x);
     if (x < 0 && x < min) x = min;
@@ -2863,7 +2858,6 @@ var methods = {
       var _that$list$getBoundin = that.list.getBoundingClientRect(),
         left = _that$list$getBoundin.left,
         right = _that$list$getBoundin.right;
-      console.log(left, right);
       if (left < 0) {
         that.navbar.querySelector('.viewer-list-prev').style.display = 'block';
       } else {

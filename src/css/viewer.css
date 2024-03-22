@@ -358,6 +358,9 @@
       background-color: unset;
       background-size: contain;
       border-radius: 0;
+      &.hide-navbar{
+        background-image:url(../images/hide_nav.png);
+      }
     }
   }
 }

@@ -541,7 +541,16 @@ export default {
     setTimeout(() => {
       this.wheeling = false;
     }, 50);
-
+    if (event.target.offsetParent === this.footer ||
+      event.target.offsetParent === this.list ||
+      event.target === this.list) {
+      if (event.deltaY < 0) {
+        this.pagePrev(this.options.wheelSpeed || 150);
+      } else {
+        this.pageNext(this.options.wheelSpeed ||150)
+      }
+      return;
+    }
     const ratio = Number(this.options.zoomRatio) || 0.1;
     let delta = 1;
 
