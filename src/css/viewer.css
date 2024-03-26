@@ -49,12 +49,12 @@
 }
 .viewer-one-to-one::before {
   content: 'One to One';
-  background-image:url(../images/sizefull.png) ;
+  background-image:url(../images/sizedefault.png) ;
   background-size: contain;
   background-repeat: no-repeat;
 }
 .viewer-one.viewer-one-to-one::before{
-  background-image:url(../images/sizedefault.png) !important ;
+  background-image:url(../images/sizefull.png) !important ;
 }
 
 .viewer-reset::before {
@@ -164,6 +164,61 @@
     margin: 15px auto;
     max-width: 90% !important;
     width: auto;
+  }
+  & .tag{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 82px;
+    transform: translateY(-50%) translateX(-9px);
+    &.tag_reverse{
+      flex-direction: row-reverse;
+      transform: translateX( calc(-100% + 9px)) translateY(-50%);
+    }
+
+    & > .tag_point{
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, .6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & > .tag_point_inner{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #8c222c;
+      }
+    }
+    & > .tag_line{
+      width: 8px;
+      height: 2px;
+      background-color: rgba(255, 255, 255, .6);
+    }
+    & > .tag_content{
+      border-radius: 16px;
+      background-color: rgba(255, 255, 255, .6);
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      box-sizing: border-box;
+      & > .tag_content_inner{
+        height: 28px;
+        background-color: rgba(0, 0, 0, .6);
+        color: #fff;
+        font-family: PingFangSC-Regular;
+        font-size: 13px;
+        border-radius: 16px;
+        padding: 8px 14px;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;  
+      }
+    }
   }
 }
 
@@ -358,6 +413,8 @@
       background-color: unset;
       background-size: contain;
       border-radius: 0;
+      width: 20px;
+      height: 20px;
       &.hide-navbar{
         background-image:url(../images/hide_nav.png);
       }

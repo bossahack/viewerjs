@@ -49,6 +49,7 @@ import {
   removeListener,
   setStyle,
   toggleClass,
+  createTag
 } from './utilities';
 
 export default {
@@ -715,6 +716,7 @@ export default {
    */
   zoomTo(ratio, showTooltip = false, pivot = null, _originalEvent = null, _zoomable = false) {
     this.removeClassOne();
+    this.removeTags();
     const {
       element,
       options,
@@ -1411,5 +1413,20 @@ export default {
       }
     }, 100);
     
+  },
+  //创建标签
+  createTags (imgData, tags) {
+    console.log(imgData, tags) 
+    if (!tags) return;
+    tags = JSON.parse(tags)
+    this.removeTags();
+    tags.forEach(tag => {
+      let x = imgData.naturalWidth * tag.x * imgData.ratio + imgData.x;
+      let y = imgData.naturalHeight * tag.y * imgData.ratio + imgData.y;
+      createTag({ x, y, text: tag.text, container: this.canvas,tag,imgData })
+    });
+  },
+  removeTags () {
+    this.canvas.querySelectorAll('.tag')?.forEach(item=>item.remove());    
   }
 };

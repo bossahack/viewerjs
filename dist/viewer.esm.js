@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-21T03:04:29.274Z
+ * Date: 2024-03-25T01:04:50.517Z
  */
 
 function ownKeys(e, r) {
@@ -949,6 +949,55 @@ function getPointersCenter(pointers) {
     pageY: pageY
   };
 }
+function createTag(_ref4) {
+  var x = _ref4.x,
+    y = _ref4.y,
+    text = _ref4.text,
+    container = _ref4.container,
+    tag = _ref4.tag,
+    imgData = _ref4.imgData;
+  var reversX = 0.51;
+  var safeY = 16;
+  y = getSafeY(y, imgData, safeY);
+  var box = document.createElement('div');
+  box.className = 'tag';
+  setStyle(box, {
+    left: x + 'px',
+    top: y + 'px'
+  });
+  if (tag.x > reversX) {
+    if (tag.x > reversX) {
+      addClass(box, 'tag_reverse');
+    }
+  }
+  var spanPointer = document.createElement('span');
+  spanPointer.className = 'tag_point';
+  var spanPointerInner = document.createElement('span');
+  spanPointerInner.className = 'tag_point_inner';
+  spanPointer.appendChild(spanPointerInner);
+  var line = document.createElement('span');
+  line.className = 'tag_line';
+  var cnt = document.createElement('span');
+  cnt.className = 'tag_content';
+  var cntInner = document.createElement('span');
+  cntInner.className = 'tag_content_inner';
+  cntInner.innerText = text;
+  cnt.appendChild(cntInner);
+  box.appendChild(spanPointer);
+  box.appendChild(line);
+  box.appendChild(cnt);
+  container.appendChild(box);
+}
+function getSafeY(y, imgData, safeY) {
+  if (y < safeY) {
+    return safeY;
+  }
+  var maxY = imgData.y + imgData.height - safeY;
+  if (y > maxY) {
+    return maxY;
+  }
+  return y;
+}
 
 var render = {
   render: function render() {
@@ -1158,6 +1207,7 @@ var render = {
       _this2.imageData = imageData;
       _this2.initialImageData = initialImageData;
       console.log(initialImageData);
+      _this2.createTags(initialImageData, image.getAttribute('tags'));
       if (done) {
         done();
       }
@@ -1292,12 +1342,15 @@ var handlers = {
         break;
       case 'zoom-in':
         this.zoom(0.1, true);
+        this.removeTags();
         break;
       case 'zoom-out':
         this.zoom(-0.1, true);
+        this.removeTags();
         break;
       case 'one-to-one':
         this.toggle();
+        this.removeTags();
         break;
       case 'reset':
         this.reset();
@@ -1654,6 +1707,7 @@ var handlers = {
   },
   wheel: function wheel(event) {
     var _this4 = this;
+    console.log(event.target);
     if (!this.viewed) {
       return;
     }
@@ -1667,7 +1721,7 @@ var handlers = {
     setTimeout(function () {
       _this4.wheeling = false;
     }, 50);
-    if (event.target.offsetParent === this.footer || event.target.offsetParent === this.list || event.target === this.list) {
+    if (event.target.offsetParent === this.footer || event.target.offsetParent === this.navbar || event.target.offsetParent === this.list || event.target === this.list) {
       if (event.deltaY < 0) {
         this.pagePrev(this.options.wheelSpeed || 150);
       } else {
@@ -2265,6 +2319,7 @@ var methods = {
     var _originalEvent = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
     var _zoomable = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
     this.removeClassOne();
+    this.removeTags();
     var element = this.element,
       options = this.options,
       pointers = this.pointers,
@@ -2868,6 +2923,32 @@ var methods = {
         that.navbar.querySelector('.viewer-list-next').style.display = 'none';
       }
     }, 100);
+  },
+  //创建标签
+  createTags: function createTags(imgData, tags) {
+    var _this14 = this;
+    console.log(imgData, tags);
+    if (!tags) return;
+    tags = JSON.parse(tags);
+    this.removeTags();
+    tags.forEach(function (tag) {
+      var x = imgData.naturalWidth * tag.x * imgData.ratio + imgData.x;
+      var y = imgData.naturalHeight * tag.y * imgData.ratio + imgData.y;
+      createTag({
+        x: x,
+        y: y,
+        text: tag.text,
+        container: _this14.canvas,
+        tag: tag,
+        imgData: imgData
+      });
+    });
+  },
+  removeTags: function removeTags() {
+    var _this$canvas$querySel;
+    (_this$canvas$querySel = this.canvas.querySelectorAll('.tag')) === null || _this$canvas$querySel === void 0 || _this$canvas$querySel.forEach(function (item) {
+      return item.remove();
+    });
   }
 };
 

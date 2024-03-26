@@ -74,14 +74,17 @@ export default {
 
       case 'zoom-in':
         this.zoom(0.1, true);
+        this.removeTags();
         break;
 
       case 'zoom-out':
         this.zoom(-0.1, true);
+        this.removeTags();
         break;
 
       case 'one-to-one':
         this.toggle();
+        this.removeTags();
         break;
 
       case 'reset':
@@ -524,7 +527,8 @@ export default {
     }
   },
 
-  wheel(event) {
+  wheel (event) {
+    console.log(event.target)
     if (!this.viewed) {
       return;
     }
@@ -542,6 +546,7 @@ export default {
       this.wheeling = false;
     }, 50);
     if (event.target.offsetParent === this.footer ||
+      event.target.offsetParent === this.navbar ||
       event.target.offsetParent === this.list ||
       event.target === this.list) {
       if (event.deltaY < 0) {

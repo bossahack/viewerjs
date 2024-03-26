@@ -72,7 +72,9 @@ window.onload = function () {
       oneToOne: true,      
     },
     title: false,
-    initialCoverage:1
+    tooltip:false,
+    initialCoverage: 1,
+    inheritedAttributes: [ 'tags' ]
   };
   var viewer = window.viewer = new Viewer(pictures, options);
 
@@ -150,4 +152,40 @@ window.onload = function () {
 
   $('[data-toggle="tooltip"]').tooltip();
 };
-document.querySelector('body').append(window.navigator.userAgent.toLowerCase() )
+// document.querySelector('body').append(window.navigator.userAgent.toLowerCase())
+
+// class AccurateTimer{
+//   constructor(callback,interval,repeat) {
+//     this.id = null;
+//     this.callback = callback;
+//     this.interval = interval;
+//     this.repeat = repeat;
+//     this.startTime = null;
+//   }
+//   exec (startTime=performance.now()) {
+//     this.startTime = startTime
+//     this.id=requestAnimationFrame(this.loop.bind(this))
+//   }
+//   loop () {
+//     if (!this.id) return;
+//     let now=performance.now()
+//     if (now - this.startTime >= this.interval) {
+//       this.callback();
+//       if (this.repeat) {
+//         this.startTime = now;
+//         this.exec()
+//       }
+//     } else {
+//       this.exec(this.startTime)
+//     }
+//   }
+//   cancel () {
+//     this.id = null;
+//   }
+
+// }
+
+// let timer = new AccurateTimer(() => {
+//   console.count()
+// },1000,true);
+// timer.exec()

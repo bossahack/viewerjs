@@ -204,7 +204,7 @@ export default {
     }));
   },
 
-  initImage(done) {
+  initImage (done) {
     const { options, image, viewerData } = this;
     const footerHeight =(this.options._navbar===undefined || this.options._navbar===true)? this.navbar.offsetHeight:0;//  this.footer.offsetHeight;
     const viewerWidth = viewerData.width;
@@ -269,6 +269,7 @@ export default {
       this.imageData = imageData;
       this.initialImageData = initialImageData;
       console.log(initialImageData)
+      this.createTags(initialImageData,image.getAttribute('tags'))
       if (done) {
         done();
       }

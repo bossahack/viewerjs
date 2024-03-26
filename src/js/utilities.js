@@ -675,3 +675,52 @@ export function getPointersCenter(pointers) {
     pageY,
   };
 }
+
+export function createTag ({x,y, text, container,tag,imgData}) {
+  let reversX = 0.51
+  let safeY = 16;
+  y= getSafeY(y, imgData,safeY);
+
+  let box = document.createElement('div')
+  box.className = 'tag';
+  setStyle(box, {
+    left:x+'px',
+    top: y+'px',
+  });
+  if (tag.x > reversX) {
+    if (tag.x > reversX) {
+      addClass(box,'tag_reverse')    
+    }    
+  }
+
+  let spanPointer = document.createElement('span')
+  spanPointer.className='tag_point'
+  let spanPointerInner = document.createElement('span')
+  spanPointerInner.className = 'tag_point_inner'
+  spanPointer.appendChild(spanPointerInner)
+
+  let line = document.createElement('span')
+  line.className = 'tag_line'
+  
+  let cnt = document.createElement('span')
+  cnt.className='tag_content'
+  let cntInner = document.createElement('span')
+  cntInner.className = 'tag_content_inner'
+  cntInner.innerText = text;
+  cnt.appendChild(cntInner)
+
+  box.appendChild(spanPointer)
+  box.appendChild(line)
+  box.appendChild(cnt)
+  container.appendChild(box)
+}
+function getSafeY (y,imgData,safeY) {
+  if (y < safeY) {
+    return safeY;
+  }
+  let maxY = imgData.y + imgData.height - safeY;
+  if (y > maxY) {
+    return maxY
+  }
+  return y;
+}
