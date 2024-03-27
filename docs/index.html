@@ -225,12 +225,12 @@
         <hr>
         <div class="docs-galley mb-3">
           <ul class="docs-pictures clearfix">
-            <li><img data-original="images/tibet-1.jpg" src="images/thumbnails/tibet-1.jpg" tags='[{"x":1,"y":1,"text":"1,1"},{"x":0.5,"y":0.5,"text":"0.50.5"},{"x":0,"y":0,"text":"0,0"},{"x":0,"y":1,"text":"0,1"},{"x":1,"y":0,"text":"1,0"}]' alt="Cuo Na Lake"></li>
-            <li><img data-original="images/tibet-2.jpg" src="images/thumbnails/tibet-2.jpg" tags='[{"x":0.5,"y":0.5,"text":"0.50.5"}]' alt="Tibetan Plateau"></li>
-            <li><img data-original="images/tibet-3.jpg" src="images/thumbnails/tibet-3.jpg" tags='[{"x":0,"y":0,"text":"0,0"}]' alt="Jokhang Temple"></li>
-            <li><img data-original="images/tibet-4.jpg" src="images/thumbnails/tibet-4.jpg" tags='[{"x":1,"y":1,"text":"1,1"},{"x":0.5,"y":0.5,"text":"0.50.5"},{"x":0,"y":0,"text":"0,0"},{"x":0,"y":1,"text":"0,1"},{"x":1,"y":0,"text":"1,0"}]' alt="Potala Palace 1"></li>
-            <li><img data-original="images/tibet-5.jpg" src="images/thumbnails/tibet-5.jpg" tags='[{"x":1,"y":1,"text":"1,1"},{"x":0.5,"y":0.5,"text":"0.50.5"},{"x":0,"y":0,"text":"0,0"},{"x":0,"y":1,"text":"0,1"},{"x":1,"y":0,"text":"1,0"}]' alt="Potala Palace 2"></li>
-            <li><img data-original="images/tibet-6.jpg" src="images/thumbnails/tibet-6.jpg" tags='[{"x":0.5,"y":0.5,"text":"1,1"},{"x":0.4,"y":0.4,"text":"0.40.4"},{"x":0.4,"y":0.6,"text":"0.4,0.6"},{"x":0.6,"y":0.4,"text":"0.6,0.4"},{"x":0.6,"y":0.6,"text":"0.6,0.6"}]' alt="Potala Palace 3"></li>
+            <li><img data-original="images/tibet-1.jpg" src="images/thumbnails/tibet-1.jpg" tags='[{"x":1,"y":1,"name":"1,1"},{"x":0.5,"y":0.5,"name":"0.50.5"},{"x":0,"y":0,"name":"0,0"},{"x":0,"y":1,"name":"0,1"},{"x":1,"y":0,"name":"1,0"}]' alt="Cuo Na Lake"></li>
+            <li><img data-original="images/tibet-2.jpg" src="images/thumbnails/tibet-2.jpg" tags='[{"x":0.5,"y":0.5,"name":"0.50.5"}]' alt="Tibetan Plateau"></li>
+            <li><img data-original="images/tibet-3.jpg" src="images/thumbnails/tibet-3.jpg" tags='[{"x":0,"y":0,"name":"0,0"}]' alt="Jokhang Temple"></li>
+            <li><img data-original="images/tibet-4.jpg" src="images/thumbnails/tibet-4.jpg" tags='[{"x":1,"y":1,"name":"1,1"},{"x":0.5,"y":0.5,"name":"0.50.5"},{"x":0,"y":0,"name":"0,0"},{"x":0,"y":1,"name":"0,1"},{"x":1,"y":0,"name":"1,0"}]' alt="Potala Palace 1"></li>
+            <li><img data-original="images/tibet-5.jpg" src="images/thumbnails/tibet-5.jpg" tags='[{"x":1,"y":1,"name":"1,1"},{"x":0.5,"y":0.5,"name":"0.50.5"},{"x":0,"y":0,"name":"0,0"},{"x":0,"y":1,"name":"0,1"},{"x":1,"y":0,"name":"1,0"}]' alt="Potala Palace 2"></li>
+            <li><img data-original="images/tibet-6.jpg" src="images/thumbnails/tibet-6.jpg" tags='[{"x":0.5,"y":0.5,"name":"1,1"},{"x":0.4,"y":0.4,"name":"0.40.4"},{"x":0.4,"y":0.6,"name":"0.4,0.6"},{"x":0.6,"y":0.4,"name":"0.6,0.4"},{"x":0.6,"y":0.6,"name":"0.6,0.6"}]' alt="Potala Palace 3"></li>
             <li><img data-original="images/tibet-7.jpg" src="images/thumbnails/tibet-7.jpg" alt="Lhasa River"></li>
             <li><img data-original="images/tibet-8.jpg" src="images/thumbnails/tibet-8.jpg" alt="Namtso 1"></li>
             <li><img data-original="images/tibet-9.jpg" src="images/thumbnails/tibet-9.jpg" alt="Namtso 2"></li>
@@ -254,31 +254,31 @@
             <span class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-method="view" data-target="#viewIndex" title="View one of the images with image's index">View</button>
             </span>
-            <input type="text" class="form-control" id="viewIndex" name="index" value="4" placeholder="index">
+            <input type="name" class="form-control" id="viewIndex" name="index" value="4" placeholder="index">
           </div>
           <div class="input-group">
             <span class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-enable="inline" data-method="zoom" data-target="#zoomRatio" title="Zoom the image">Zoom</button>
             </span>
-            <input type="text" class="form-control" id="zoomRatio" name="ratio" value="0.5" placeholder="ratio">
+            <input type="name" class="form-control" id="zoomRatio" name="ratio" value="0.5" placeholder="ratio">
           </div>
           <div class="input-group">
             <span class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-enable="inline" data-method="zoomTo" data-target="#zoomToRatio" title="Zoom the image to a special ratio">Zoom To</button>
             </span>
-            <input type="text" class="form-control" id="zoomToRatio" name="ratio" value="1" placeholder="ratio">
+            <input type="name" class="form-control" id="zoomToRatio" name="ratio" value="1" placeholder="ratio">
           </div>
           <div class="input-group">
             <span class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-enable="inline" data-method="rotate" data-target="#rotateDegrees" title="Rotate the image">Rotate</button>
             </span>
-            <input type="text" class="form-control" id="rotateDegrees" name="degrees" value="90" placeholder="degrees">
+            <input type="name" class="form-control" id="rotateDegrees" name="degrees" value="90" placeholder="degrees">
           </div>
           <div class="input-group">
             <span class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-enable="inline" data-method="rotateTo" data-target="#rotateToDegrees" title="Rotate the image to a special angle">Rotate To</button>
             </span>
-            <input type="text" class="form-control" id="rotateToDegrees" name="degrees" value="360" placeholder="degrees">
+            <input type="name" class="form-control" id="rotateToDegrees" name="degrees" value="360" placeholder="degrees">
           </div>
           <div class="btn-group d-flex" role="group">
             <button type="button" class="btn btn-primary" data-arguments="[0.5]" data-enable="inline" data-method="zoom" title="Zoom in">Zoom In</button>

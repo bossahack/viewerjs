@@ -1158,9 +1158,11 @@ export default {
     const { viewer } = this;
     const one=viewer.querySelector(`.${NAMESPACE}-one-to-one`)
     if (this.imageData.ratio === 1) {
-      this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
+      this.reset();
+      // this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
       removeClass(one, CLASS_ONE);
     } else {
+      this.reset();
       this.zoomTo(1, true, null, _originalEvent);
       addClass(one,CLASS_ONE)
     }
@@ -1330,7 +1332,6 @@ export default {
   },
   toggleNavbar () {
     this.removeClassOne();
-    console.log(this.options.navbar, this)
     // this.options.navbar = !this.options.navbar;
     if (this.options._navbar === undefined) {
       this.options._navbar = this.options.navbar;
@@ -1355,7 +1356,6 @@ export default {
     });
   },
   pagePrev (transWidth) {
-    console.log(this.options.navbar, this)
     let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
     let fullWidth = this.navbar.offsetWidth-70*2;
     if (!transWidth) {
@@ -1367,9 +1367,7 @@ export default {
       x=0      
     }
     let min = this.viewerData.width - this.list.offsetWidth ;
-    console.log('min',min,x)
     if (x<0 && x < min) x = min;
-    console.log(x)
     if (this.list.offsetWidth < this.viewerData.width) x = 0;
   
     setStyle(this.list, {
@@ -1378,7 +1376,6 @@ export default {
     this.setPrevNextVisible(this);
   },
   pageNext (transWidth) {
-    console.log(this.options.navbar, this)
     let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
     let fullWidth = this.navbar.offsetWidth - 70 * 2;
     if (!transWidth) {
@@ -1387,9 +1384,7 @@ export default {
     let x = +currentX - transWidth;
 
     let min = this.viewerData.width - this.list.offsetWidth ;
-    console.log('min',min,x)
     if (x<0 && x < min) x = min;
-    console.log(x)
     if (this.list.offsetWidth < this.viewerData.width) x = 0;
   
     setStyle(this.list, {
@@ -1416,14 +1411,13 @@ export default {
   },
   //创建标签
   createTags (imgData, tags) {
-    console.log(imgData, tags) 
     if (!tags) return;
     tags = JSON.parse(tags)
     this.removeTags();
     tags.forEach(tag => {
       let x = imgData.naturalWidth * tag.x * imgData.ratio + imgData.x;
       let y = imgData.naturalHeight * tag.y * imgData.ratio + imgData.y;
-      createTag({ x, y, text: tag.text, container: this.canvas,tag,imgData })
+      createTag({ x, y, text: tag.name, container: this.canvas,tag,imgData })
     });
   },
   removeTags () {

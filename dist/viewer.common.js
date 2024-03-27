@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-25T01:04:50.517Z
+ * Date: 2024-03-27T02:07:21.833Z
  */
 
 'use strict';
@@ -956,11 +956,11 @@ function createTag(_ref4) {
     y = _ref4.y,
     text = _ref4.text,
     container = _ref4.container,
-    tag = _ref4.tag,
-    imgData = _ref4.imgData;
+    tag = _ref4.tag;
+    _ref4.imgData;
   var reversX = 0.51;
-  var safeY = 16;
-  y = getSafeY(y, imgData, safeY);
+  // y= getSafeY(y, imgData,safeY);
+
   var box = document.createElement('div');
   box.className = 'tag';
   setStyle(box, {
@@ -989,16 +989,6 @@ function createTag(_ref4) {
   box.appendChild(line);
   box.appendChild(cnt);
   container.appendChild(box);
-}
-function getSafeY(y, imgData, safeY) {
-  if (y < safeY) {
-    return safeY;
-  }
-  var maxY = imgData.y + imgData.height - safeY;
-  if (y > maxY) {
-    return maxY;
-  }
-  return y;
 }
 
 var render = {
@@ -1208,8 +1198,6 @@ var render = {
       }
       _this2.imageData = imageData;
       _this2.initialImageData = initialImageData;
-      console.log(initialImageData);
-      _this2.createTags(initialImageData, image.getAttribute('tags'));
       if (done) {
         done();
       }
@@ -1219,6 +1207,7 @@ var render = {
     var _this3 = this;
     var image = this.image,
       imageData = this.imageData;
+    this.createTags(imageData, image.getAttribute('tags'));
     setStyle(image, assign({
       width: imageData.width,
       height: imageData.height,
@@ -1343,16 +1332,16 @@ var handlers = {
         this.view(getData(target, 'index'));
         break;
       case 'zoom-in':
-        this.zoom(0.1, true);
         this.removeTags();
+        this.zoom(0.1, true);
         break;
       case 'zoom-out':
-        this.zoom(-0.1, true);
         this.removeTags();
+        this.zoom(-0.1, true);
         break;
       case 'one-to-one':
-        this.toggle();
         this.removeTags();
+        this.toggle();
         break;
       case 'reset':
         this.reset();
@@ -1558,6 +1547,7 @@ var handlers = {
     }
   },
   dragstart: function dragstart(event) {
+    console.log(event);
     if (event.target.localName === 'img') {
       event.preventDefault();
     }
@@ -1709,7 +1699,7 @@ var handlers = {
   },
   wheel: function wheel(event) {
     var _this4 = this;
-    console.log(event.target);
+    console.log(event);
     if (!this.viewed) {
       return;
     }
@@ -2695,9 +2685,11 @@ var methods = {
     var viewer = this.viewer;
     var one = viewer.querySelector(".".concat(NAMESPACE, "-one-to-one"));
     if (this.imageData.ratio === 1) {
-      this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
+      this.reset();
+      // this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
       removeClass(one, CLASS_ONE);
     } else {
+      this.reset();
       this.zoomTo(1, true, null, _originalEvent);
       addClass(one, CLASS_ONE);
     }
@@ -2842,7 +2834,6 @@ var methods = {
   toggleNavbar: function toggleNavbar() {
     var _this13 = this;
     this.removeClassOne();
-    console.log(this.options.navbar, this);
     // this.options.navbar = !this.options.navbar;
     if (this.options._navbar === undefined) {
       this.options._navbar = this.options.navbar;
@@ -2868,7 +2859,6 @@ var methods = {
   },
   pagePrev: function pagePrev(transWidth) {
     var _window$getComputedSt;
-    console.log(this.options.navbar, this);
     var currentX = ((_window$getComputedSt = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt === void 0 ? void 0 : _window$getComputedSt[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     if (!transWidth) {
@@ -2880,9 +2870,7 @@ var methods = {
       x = 0;
     }
     var min = this.viewerData.width - this.list.offsetWidth;
-    console.log('min', min, x);
     if (x < 0 && x < min) x = min;
-    console.log(x);
     if (this.list.offsetWidth < this.viewerData.width) x = 0;
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
@@ -2891,7 +2879,6 @@ var methods = {
   },
   pageNext: function pageNext(transWidth) {
     var _window$getComputedSt2;
-    console.log(this.options.navbar, this);
     var currentX = ((_window$getComputedSt2 = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt2 === void 0 ? void 0 : _window$getComputedSt2[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     if (!transWidth) {
@@ -2899,9 +2886,7 @@ var methods = {
     }
     var x = +currentX - transWidth;
     var min = this.viewerData.width - this.list.offsetWidth;
-    console.log('min', min, x);
     if (x < 0 && x < min) x = min;
-    console.log(x);
     if (this.list.offsetWidth < this.viewerData.width) x = 0;
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
@@ -2929,7 +2914,6 @@ var methods = {
   //创建标签
   createTags: function createTags(imgData, tags) {
     var _this14 = this;
-    console.log(imgData, tags);
     if (!tags) return;
     tags = JSON.parse(tags);
     this.removeTags();
@@ -2939,7 +2923,7 @@ var methods = {
       createTag({
         x: x,
         y: y,
-        text: tag.text,
+        text: tag.name,
         container: _this14.canvas,
         tag: tag,
         imgData: imgData

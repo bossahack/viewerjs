@@ -268,8 +268,6 @@ export default {
 
       this.imageData = imageData;
       this.initialImageData = initialImageData;
-      console.log(initialImageData)
-      this.createTags(initialImageData,image.getAttribute('tags'))
       if (done) {
         done();
       }
@@ -278,6 +276,7 @@ export default {
 
   renderImage(done) {
     const { image, imageData } = this;
+    this.createTags(imageData,image.getAttribute('tags'))
 
     setStyle(image, assign({
       width: imageData.width,

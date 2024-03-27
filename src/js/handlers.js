@@ -73,18 +73,18 @@ export default {
         break;
 
       case 'zoom-in':
-        this.zoom(0.1, true);
         this.removeTags();
+        this.zoom(0.1, true);
         break;
 
       case 'zoom-out':
-        this.zoom(-0.1, true);
         this.removeTags();
+        this.zoom(-0.1, true);
         break;
 
       case 'one-to-one':
-        this.toggle();
         this.removeTags();
+        this.toggle();
         break;
 
       case 'reset':
@@ -336,7 +336,8 @@ export default {
     }
   },
 
-  dragstart(event) {
+  dragstart (event) {
+    console.log(event)
     if (event.target.localName === 'img') {
       event.preventDefault();
     }
@@ -528,7 +529,7 @@ export default {
   },
 
   wheel (event) {
-    console.log(event.target)
+    console.log(event)
     if (!this.viewed) {
       return;
     }

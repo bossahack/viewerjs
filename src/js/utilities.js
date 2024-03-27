@@ -679,7 +679,7 @@ export function getPointersCenter(pointers) {
 export function createTag ({x,y, text, container,tag,imgData}) {
   let reversX = 0.51
   let safeY = 16;
-  y= getSafeY(y, imgData,safeY);
+  // y= getSafeY(y, imgData,safeY);
 
   let box = document.createElement('div')
   box.className = 'tag';
