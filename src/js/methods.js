@@ -225,6 +225,7 @@ export default {
    * @returns {Viewer} this
    */
   view(index = this.options.initialViewIndex) {
+    this.removeClassOne();
     index = Number(index) || 0;
 
     if (this.hiding || this.played || index < 0 || index >= this.length
@@ -1160,7 +1161,11 @@ export default {
     if (this.imageData.ratio === 1) {
       this.reset();
       // this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
-      removeClass(one, CLASS_ONE);
+      if (one.classList.contains(CLASS_ONE)) {
+        removeClass(one, CLASS_ONE);
+      } else {
+        addClass(one,CLASS_ONE)        
+      }
     } else {
       this.reset();
       this.zoomTo(1, true, null, _originalEvent);
@@ -1172,8 +1177,8 @@ export default {
 
   removeClassOne () {
     const { viewer } = this;
-    const one=viewer.querySelector(`.${NAMESPACE}-one-to-one`)
-    removeClass(one, CLASS_ONE);
+    const one = viewer?.querySelector(`.${NAMESPACE}-one-to-one`)
+    if(one)removeClass(one, CLASS_ONE);
   },
 
   // Reset the image to its initial state

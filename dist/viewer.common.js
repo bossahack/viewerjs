@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-27T02:07:21.833Z
+ * Date: 2024-03-28T06:20:34.416Z
  */
 
 'use strict';
@@ -1547,7 +1547,6 @@ var handlers = {
     }
   },
   dragstart: function dragstart(event) {
-    console.log(event);
     if (event.target.localName === 'img') {
       event.preventDefault();
     }
@@ -1888,6 +1887,7 @@ var methods = {
   view: function view() {
     var _this2 = this;
     var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.options.initialViewIndex;
+    this.removeClassOne();
     index = Number(index) || 0;
     if (this.hiding || this.played || index < 0 || index >= this.length || this.viewed && index === this.index) {
       return this;
@@ -2687,7 +2687,11 @@ var methods = {
     if (this.imageData.ratio === 1) {
       this.reset();
       // this.zoomTo(this.imageData.oldRatio, true, null, _originalEvent);
-      removeClass(one, CLASS_ONE);
+      if (one.classList.contains(CLASS_ONE)) {
+        removeClass(one, CLASS_ONE);
+      } else {
+        addClass(one, CLASS_ONE);
+      }
     } else {
       this.reset();
       this.zoomTo(1, true, null, _originalEvent);
@@ -2697,8 +2701,8 @@ var methods = {
   },
   removeClassOne: function removeClassOne() {
     var viewer = this.viewer;
-    var one = viewer.querySelector(".".concat(NAMESPACE, "-one-to-one"));
-    removeClass(one, CLASS_ONE);
+    var one = viewer === null || viewer === void 0 ? void 0 : viewer.querySelector(".".concat(NAMESPACE, "-one-to-one"));
+    if (one) removeClass(one, CLASS_ONE);
   },
   // Reset the image to its initial state
   reset: function reset() {
@@ -3453,4 +3457,3 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 module.exports = Viewer;
-//# sourceMappingURL=viewer.common.js.map

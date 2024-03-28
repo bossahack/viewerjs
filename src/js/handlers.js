@@ -337,13 +337,12 @@ export default {
   },
 
   dragstart (event) {
-    console.log(event)
     if (event.target.localName === 'img') {
       event.preventDefault();
     }
   },
 
-  pointerdown(event) {
+  pointerdown (event) {    
     const { options, pointers } = this;
     const { buttons, button } = event;
 
@@ -397,7 +396,7 @@ export default {
     this.action = action;
   },
 
-  pointermove(event) {
+  pointermove (event) {
     const { pointers, action } = this;
 
     if (!this.viewed || !action) {
