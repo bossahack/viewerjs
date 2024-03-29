@@ -115,7 +115,7 @@
 }
 
 .viewer-container {
-  bottom: 0;
+  bottom: -1px;
   direction: ltr;
   font-size: 0;
   left: 0;

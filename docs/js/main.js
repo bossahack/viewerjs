@@ -75,7 +75,8 @@ window.onload = function () {
     tooltip:false,
     initialCoverage: 1,
     inheritedAttributes: [ 'tags' ],
-    toggleOnDblclick:false
+    toggleOnDblclick: false,
+    backdrop:'static'
   };
   var viewer = window.viewer = new Viewer(pictures, options);
 

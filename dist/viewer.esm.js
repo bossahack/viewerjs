@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-28T06:20:34.416Z
+ * Date: 2024-03-29T06:39:50.003Z
  */
 
 function ownKeys(e, r) {
@@ -3455,3 +3455,4 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 export { Viewer as default };
+//# sourceMappingURL=viewer.esm.js.map

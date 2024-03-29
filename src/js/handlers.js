@@ -31,7 +31,7 @@ import {
 } from './utilities';
 
 export default {
-  click(event) {
+  click (event) {
     const { options, imageData } = this;
     let { target } = event;
     let action = getData(target, DATA_ACTION);
