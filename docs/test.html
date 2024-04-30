@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Slide Event Example</title>
+<script>
+function setupTouchEvents() {
+    window.element = document.getElementById('slideable');
+  var startX=0,startY=0;
+  var move=false;
+    element.addEventListener('mousedown', function(event) {
+      console.log(event)
+        // 记录开始触摸的位置
+        startX = event.clientX;
+        startY=event.clientY;
+        move=true;
+    });
+ 
+    element.addEventListener('mousemove', function(event) {
+      if(!move) return;
+        // 计算滑动的距离
+        var currentX = event.clientX;
+        var deltaX = currentX - startX;
+        startX=currentX;
+
+        var currentY=event.clientY;
+        var deltaY=currentY-startY;
+        startY=currentY;
+        // 执行滑动操作
+        slideFunction(deltaX,deltaY);
+    });
+    element.addEventListener('mouseup', function(event) {
+     move=false;
+    });
+ 
+    // 你可以在这个函数中实现具体的滑动逻辑
+    function slideFunction(deltaX,deltaY) {
+      console.log(deltaX,deltaY)
+        let rects=element.getBoundingClientRect();
+        let x=rects.x+deltaX;
+        let y=rects.y+deltaY;
+        element.style.left=x+'px'
+        element.style.top=y+'px'
+    }
+}
+ 
+window.onload = setupTouchEvents;
+</script>
+</head>
+<body>
+<div id="slideable" style="background-color: green; width: 300px;height: 300px;position: absolute;">
+    <p>Touch and slide this box around.</p>
+</div>
+</body>
+</html>

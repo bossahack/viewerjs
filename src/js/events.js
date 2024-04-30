@@ -16,7 +16,7 @@ import {
 
 export default {
   bind() {
-    const { options, viewer, canvas } = this;
+    const { options, viewer, canvas, list } = this;
     const document = this.element.ownerDocument;
 
     addListener(viewer, EVENT_CLICK, (this.onClick = this.click.bind(this)));
@@ -26,6 +26,10 @@ export default {
     addListener(document, EVENT_POINTER_UP, (this.onPointerUp = this.pointerup.bind(this)));
     addListener(document, EVENT_KEY_DOWN, (this.onKeyDown = this.keydown.bind(this)));
     addListener(window, EVENT_RESIZE, (this.onResize = this.resize.bind(this)));
+
+    addListener(list, EVENT_POINTER_DOWN, (this.onPointerDown = this.pointerdown.bind(this)));
+    addListener(list, EVENT_POINTER_MOVE, (this.onPointerMove = this.pointermove.bind(this)));
+    addListener(list, EVENT_POINTER_UP, (this.onPointerUp = this.pointerup.bind(this)));
 
     if (options.zoomable && options.zoomOnWheel) {
       addListener(viewer, EVENT_WHEEL, (this.onWheel = this.wheel.bind(this)), {
@@ -40,7 +44,7 @@ export default {
   },
 
   unbind() {
-    const { options, viewer, canvas } = this;
+    const { options, viewer, canvas ,list } = this;
     const document = this.element.ownerDocument;
 
     removeListener(viewer, EVENT_CLICK, this.onClick);
@@ -50,6 +54,11 @@ export default {
     removeListener(document, EVENT_POINTER_UP, this.onPointerUp);
     removeListener(document, EVENT_KEY_DOWN, this.onKeyDown);
     removeListener(window, EVENT_RESIZE, this.onResize);
+
+
+    removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
+    removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
+    removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
 
     if (options.zoomable && options.zoomOnWheel) {
       removeListener(viewer, EVENT_WHEEL, this.onWheel, {

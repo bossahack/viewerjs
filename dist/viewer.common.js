@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-03-29T06:39:50.003Z
+ * Date: 2024-04-29T09:55:25.888Z
  */
 
 'use strict';
@@ -43,7 +43,7 @@ function _toPrimitive(t, r) {
 }
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : String(i);
+  return "symbol" == typeof i ? i : i + "";
 }
 function _typeof(o) {
   "@babel/helpers - typeof";
@@ -1251,7 +1251,8 @@ var events = {
   bind: function bind() {
     var options = this.options,
       viewer = this.viewer,
-      canvas = this.canvas;
+      canvas = this.canvas,
+      list = this.list;
     var document = this.element.ownerDocument;
     addListener(viewer, EVENT_CLICK, this.onClick = this.click.bind(this));
     addListener(viewer, EVENT_DRAG_START, this.onDragStart = this.dragstart.bind(this));
@@ -1260,6 +1261,9 @@ var events = {
     addListener(document, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
     addListener(document, EVENT_KEY_DOWN, this.onKeyDown = this.keydown.bind(this));
     addListener(window, EVENT_RESIZE, this.onResize = this.resize.bind(this));
+    addListener(list, EVENT_POINTER_DOWN, this.onPointerDown = this.pointerdown.bind(this));
+    addListener(list, EVENT_POINTER_MOVE, this.onPointerMove = this.pointermove.bind(this));
+    addListener(list, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
     if (options.zoomable && options.zoomOnWheel) {
       addListener(viewer, EVENT_WHEEL, this.onWheel = this.wheel.bind(this), {
         passive: false,
@@ -1273,7 +1277,8 @@ var events = {
   unbind: function unbind() {
     var options = this.options,
       viewer = this.viewer,
-      canvas = this.canvas;
+      canvas = this.canvas,
+      list = this.list;
     var document = this.element.ownerDocument;
     removeListener(viewer, EVENT_CLICK, this.onClick);
     removeListener(viewer, EVENT_DRAG_START, this.onDragStart);
@@ -1282,6 +1287,9 @@ var events = {
     removeListener(document, EVENT_POINTER_UP, this.onPointerUp);
     removeListener(document, EVENT_KEY_DOWN, this.onKeyDown);
     removeListener(window, EVENT_RESIZE, this.onResize);
+    removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
+    removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
+    removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
     if (options.zoomable && options.zoomOnWheel) {
       removeListener(viewer, EVENT_WHEEL, this.onWheel, {
         passive: false,
@@ -1582,7 +1590,9 @@ var handlers = {
     if (options.zoomOnTouch && options.zoomable && Object.keys(pointers).length > 1) {
       action = ACTION_ZOOM;
     } else if (options.slideOnTouch && (event.pointerType === 'touch' || event.type === 'touchstart') && this.isSwitchable()) {
-      action = ACTION_SWITCH;
+      if (!this.isListScroll(event)) {
+        action = ACTION_SWITCH;
+      }
     }
     if (options.transition && (action === ACTION_MOVE || action === ACTION_ZOOM)) {
       removeClass(this.image, CLASS_TRANSITION);
@@ -1603,6 +1613,7 @@ var handlers = {
     } else {
       assign(pointers[event.pointerId || 0] || {}, getPointer(event, true));
     }
+    console.log(pointers[event.pointerId || 0]);
     this.change(event);
   },
   pointerup: function pointerup(event) {
@@ -2062,9 +2073,18 @@ var methods = {
    */
   move: function move(x) {
     var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+    var event = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     var imageData = this.imageData;
+    if (this.isListScroll(event)) {
+      console.log('footer move', x, isUndefined(x) ? x : imageData.x + Number(x));
+      this.pagePrev(x * 3);
+      return;
+    }
     this.moveTo(isUndefined(x) ? x : imageData.x + Number(x), isUndefined(y) ? y : imageData.y + Number(y));
     return this;
+  },
+  isListScroll: function isListScroll(event) {
+    return event.target.offsetParent == this.footer || event.target.offsetParent == this.list;
   },
   /**
    * Move the image to an absolute point.
@@ -3189,7 +3209,7 @@ var Viewer = /*#__PURE__*/function () {
     this.id = getUniqueID();
     this.init();
   }
-  _createClass(Viewer, [{
+  return _createClass(Viewer, [{
     key: "init",
     value: function init() {
       var _this = this;
@@ -3452,7 +3472,6 @@ var Viewer = /*#__PURE__*/function () {
       assign(DEFAULTS, isPlainObject(options) && options);
     }
   }]);
-  return Viewer;
 }();
 assign(Viewer.prototype, render, events, handlers, methods, others);
 

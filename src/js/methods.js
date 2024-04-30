@@ -434,8 +434,13 @@ export default {
    * @param {number} [y=x] The moving distance in the vertical direction.
    * @returns {Viewer} this
    */
-  move(x, y = x) {
+  move(x, y = x,event=null) {
     const { imageData } = this;
+    if(this.isListScroll(event)){
+      console.log('footer move',x,isUndefined(x) ? x : imageData.x + Number(x));
+      this.pagePrev(x*3)
+      return;
+    }
 
     this.moveTo(
       isUndefined(x) ? x : imageData.x + Number(x),
@@ -443,6 +448,9 @@ export default {
     );
 
     return this;
+  },
+  isListScroll(event){
+    return event.target.offsetParent==this.footer||event.target.offsetParent==this.list;
   },
 
   /**

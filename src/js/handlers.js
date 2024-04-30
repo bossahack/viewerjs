@@ -386,7 +386,9 @@ export default {
     if (options.zoomOnTouch && options.zoomable && Object.keys(pointers).length > 1) {
       action = ACTION_ZOOM;
     } else if (options.slideOnTouch && (event.pointerType === 'touch' || event.type === 'touchstart') && this.isSwitchable()) {
+      if(!this.isListScroll(event)){
       action = ACTION_SWITCH;
+      }
     }
 
     if (options.transition && (action === ACTION_MOVE || action === ACTION_ZOOM)) {
@@ -412,7 +414,7 @@ export default {
     } else {
       assign(pointers[event.pointerId || 0] || {}, getPointer(event, true));
     }
-
+    console.log(pointers[event.pointerId || 0])
     this.change(event);
   },
 
