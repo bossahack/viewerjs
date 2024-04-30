@@ -1259,9 +1259,11 @@ var events = {
     addListener(document, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
     addListener(document, EVENT_KEY_DOWN, this.onKeyDown = this.keydown.bind(this));
     addListener(window, EVENT_RESIZE, this.onResize = this.resize.bind(this));
-    addListener(list, EVENT_POINTER_DOWN, this.onPointerDown = this.pointerdown.bind(this));
-    addListener(list, EVENT_POINTER_MOVE, this.onPointerMove = this.pointermove.bind(this));
-    addListener(list, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
+    if (IS_TOUCH_DEVICE) {
+      addListener(list, EVENT_POINTER_DOWN, this.onPointerDown = this.pointerdown.bind(this));
+      addListener(list, EVENT_POINTER_MOVE, this.onPointerMove = this.pointermove.bind(this));
+      addListener(list, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
+    }
     if (options.zoomable && options.zoomOnWheel) {
       addListener(viewer, EVENT_WHEEL, this.onWheel = this.wheel.bind(this), {
         passive: false,
@@ -1285,9 +1287,11 @@ var events = {
     removeListener(document, EVENT_POINTER_UP, this.onPointerUp);
     removeListener(document, EVENT_KEY_DOWN, this.onKeyDown);
     removeListener(window, EVENT_RESIZE, this.onResize);
-    removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
-    removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
-    removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
+    if (IS_TOUCH_DEVICE) {
+      removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
+      removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
+      removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
+    }
     if (options.zoomable && options.zoomOnWheel) {
       removeListener(viewer, EVENT_WHEEL, this.onWheel, {
         passive: false,
@@ -1611,7 +1615,6 @@ var handlers = {
     } else {
       assign(pointers[event.pointerId || 0] || {}, getPointer(event, true));
     }
-    console.log(pointers[event.pointerId || 0]);
     this.change(event);
   },
   pointerup: function pointerup(event) {
@@ -1707,7 +1710,6 @@ var handlers = {
   },
   wheel: function wheel(event) {
     var _this4 = this;
-    console.log(event);
     if (!this.viewed) {
       return;
     }
@@ -2074,15 +2076,14 @@ var methods = {
     var event = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     var imageData = this.imageData;
     if (this.isListScroll(event)) {
-      console.log('footer move', x, isUndefined(x) ? x : imageData.x + Number(x));
-      this.pagePrev(x * 3);
+      this.pagePrev(x);
       return;
     }
     this.moveTo(isUndefined(x) ? x : imageData.x + Number(x), isUndefined(y) ? y : imageData.y + Number(y));
     return this;
   },
   isListScroll: function isListScroll(event) {
-    return event.target.offsetParent == this.footer || event.target.offsetParent == this.list;
+    return event.target.offsetParent == this.footer || event.target.offsetParent == this.list || event.target.offsetParent == this.navbar;
   },
   /**
    * Move the image to an absolute point.
@@ -2880,8 +2881,13 @@ var methods = {
     });
   },
   pagePrev: function pagePrev(transWidth) {
-    var _window$getComputedSt;
-    var currentX = ((_window$getComputedSt = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt === void 0 ? void 0 : _window$getComputedSt[4]) || 0;
+    var currentX = 0;
+    if (window.listTransform === undefined) {
+      var t = window.getComputedStyle(this.list).transform;
+      var tt = t.match(/-?\d+(\.\d+)?/g);
+      window.listTransform = (tt === null || tt === void 0 ? void 0 : tt[4]) || 0;
+    }
+    currentX = window.listTransform;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     if (!transWidth) {
       transWidth = fullWidth;
@@ -2897,11 +2903,15 @@ var methods = {
     setStyle(this.list, {
       transform: "translateX(".concat(x, "px)")
     });
+    window.listTransform = x;
+    window.stimeout = setTimeout(function () {
+      window.listTransform = undefined;
+    }, 900);
     this.setPrevNextVisible(this);
   },
   pageNext: function pageNext(transWidth) {
-    var _window$getComputedSt2;
-    var currentX = ((_window$getComputedSt2 = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt2 === void 0 ? void 0 : _window$getComputedSt2[4]) || 0;
+    var _window$getComputedSt;
+    var currentX = ((_window$getComputedSt = window.getComputedStyle(this.list).transform.match(/-?\d+/g)) === null || _window$getComputedSt === void 0 ? void 0 : _window$getComputedSt[4]) || 0;
     var fullWidth = this.navbar.offsetWidth - 70 * 2;
     if (!transWidth) {
       transWidth = fullWidth;

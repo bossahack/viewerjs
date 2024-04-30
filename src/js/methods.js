@@ -437,8 +437,7 @@ export default {
   move(x, y = x,event=null) {
     const { imageData } = this;
     if(this.isListScroll(event)){
-      console.log('footer move',x,isUndefined(x) ? x : imageData.x + Number(x));
-      this.pagePrev(x*3)
+      this.pagePrev(x)
       return;
     }
 
@@ -450,7 +449,9 @@ export default {
     return this;
   },
   isListScroll(event){
-    return event.target.offsetParent==this.footer||event.target.offsetParent==this.list;
+    return event.target.offsetParent==this.footer||
+    event.target.offsetParent==this.list||
+    event.target.offsetParent==this.navbar;
   },
 
   /**
@@ -1369,7 +1370,14 @@ export default {
     });
   },
   pagePrev (transWidth) {
-    let currentX = window.getComputedStyle(this.list).transform.match(/-?\d+/g)?.[ 4 ] || 0;
+    let currentX =0;
+    if(window.listTransform===undefined){
+      let t=window.getComputedStyle(this.list).transform;
+      let tt=t.match(/-?\d+(\.\d+)?/g);
+      window.listTransform = tt?.[ 4 ] || 0;
+    }
+    currentX=window.listTransform;
+
     let fullWidth = this.navbar.offsetWidth-70*2;
     if (!transWidth) {
       transWidth=fullWidth;
@@ -1386,6 +1394,10 @@ export default {
     setStyle(this.list, {
       transform:`translateX(${x}px)`,
     });
+    window.listTransform=x;
+    window.stimeout=setTimeout(function(){
+      window.listTransform=undefined;
+    },900)
     this.setPrevNextVisible(this);
   },
   pageNext (transWidth) {

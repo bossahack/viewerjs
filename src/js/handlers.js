@@ -414,7 +414,6 @@ export default {
     } else {
       assign(pointers[event.pointerId || 0] || {}, getPointer(event, true));
     }
-    console.log(pointers[event.pointerId || 0])
     this.change(event);
   },
 
@@ -530,7 +529,6 @@ export default {
   },
 
   wheel (event) {
-    console.log(event)
     if (!this.viewed) {
       return;
     }

@@ -8,6 +8,7 @@ import {
   EVENT_POINTER_UP,
   EVENT_RESIZE,
   EVENT_WHEEL,
+  IS_TOUCH_DEVICE
 } from './constants';
 import {
   addListener,
@@ -27,10 +28,11 @@ export default {
     addListener(document, EVENT_KEY_DOWN, (this.onKeyDown = this.keydown.bind(this)));
     addListener(window, EVENT_RESIZE, (this.onResize = this.resize.bind(this)));
 
-    addListener(list, EVENT_POINTER_DOWN, (this.onPointerDown = this.pointerdown.bind(this)));
-    addListener(list, EVENT_POINTER_MOVE, (this.onPointerMove = this.pointermove.bind(this)));
-    addListener(list, EVENT_POINTER_UP, (this.onPointerUp = this.pointerup.bind(this)));
-
+    if(IS_TOUCH_DEVICE){
+      addListener(list, EVENT_POINTER_DOWN, (this.onPointerDown = this.pointerdown.bind(this)));
+      addListener(list, EVENT_POINTER_MOVE, (this.onPointerMove = this.pointermove.bind(this)));
+      addListener(list, EVENT_POINTER_UP, (this.onPointerUp = this.pointerup.bind(this)));
+    }
     if (options.zoomable && options.zoomOnWheel) {
       addListener(viewer, EVENT_WHEEL, (this.onWheel = this.wheel.bind(this)), {
         passive: false,
@@ -56,10 +58,11 @@ export default {
     removeListener(window, EVENT_RESIZE, this.onResize);
 
 
-    removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
-    removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
-    removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
-
+    if(IS_TOUCH_DEVICE){
+      removeListener(list, EVENT_POINTER_DOWN, this.onPointerDown);
+      removeListener(list, EVENT_POINTER_MOVE, this.onPointerMove);
+      removeListener(list, EVENT_POINTER_UP, this.onPointerUp);
+    }
     if (options.zoomable && options.zoomOnWheel) {
       removeListener(viewer, EVENT_WHEEL, this.onWheel, {
         passive: false,
