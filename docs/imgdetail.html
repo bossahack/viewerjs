@@ -8,10 +8,11 @@
         top: 0;
         width: 300px;
         height: 300px;
+        overflow: hidden;
       }
       .img-detail-viewer img {
-        width: 100%;
-        height: 100%;
+        width: 300%;
+        height: 300%;
         object-fit: contain;
       }
       .img-zoom {
@@ -28,6 +29,7 @@
         const viewerWidth = 300;
         const viewerHeight = 300;
         const zoomAreaWidth = 100;
+        const rate=3;
         const imgBox = document.querySelector(".img-viewer-box");
 
         imgBox.addEventListener("mouseover", function (event) {
@@ -77,11 +79,14 @@
         function createZoomArea(event, parent) {
           let cursors = getCursors(event, parent);
           let viewer = parent.querySelector("." + zoomClassName);
+          let detailImg=parent.querySelector("." + viewClassName+ " img")
           if (viewer) {
             viewer.style.display = "block";
             let zoomPositon = getZoomPosition(cursors);
             viewer.style.left = zoomPositon.x + "px";
             viewer.style.top = zoomPositon.y + "px";
+            let zoomAreaData=getZoomArea(zoomPositon);
+            setDetailViewer(zoomAreaData,rate,detailImg)
             return;
           }
 
@@ -91,6 +96,8 @@
           div.style.left = zoomPositon.x + "px";
           div.style.top = zoomPositon.y + "px";
           parent.append(div);
+          let zoomAreaData=getZoomArea(zoomPositon);
+          setDetailViewer(zoomAreaData,rate,detailImg)
         }
 
         function getZoomPosition(cursors) {
@@ -151,6 +158,23 @@
             console.error(err, that);
           }
         }
+
+        function getZoomArea(zoomPositon){
+          return {
+            x:zoomPositon.x,
+            y:zoomPositon.y,
+            width:zoomAreaWidth,
+            height:zoomAreaWidth,
+            originWidth:viewerWidth,
+            originHeight:viewerHeight
+          }
+        }
+
+        function setDetailViewer(zoomAreaData,rate,img){
+          let translateX=zoomAreaData.x*rate;
+          let translateY=zoomAreaData.y*rate;
+          img.style.transform = `translateX(-${translateX}px) translateY(-${translateY}px)`
+        }
       }
 
       window.onload = initImgDetailViewer;
@@ -172,7 +196,7 @@
     >
       <img
         src="images/thumbnails/tibet-2.jpg"
-        style="width: 300px; height: 300px"
+        style="width: 300px; height: 300px;object-fit: contain;"
       />
     </div>
   </body>
