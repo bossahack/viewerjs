@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Slide Event Example</title>
+    <style>
+      .img-detail-viewer {
+        position: absolute;
+        top: 0;
+        width: 300px;
+        height: 300px;
+      }
+      .img-detail-viewer img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .img-zoom {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: #8c222c4d;
+      }
+    </style>
+    <script>
+      function initImgDetailViewer() {
+        const viewClassName = "img-detail-viewer";
+        const zoomClassName = "img-zoom";
+        const viewerWidth = 300;
+        const viewerHeight = 300;
+        const zoomAreaWidth = 100;
+        const imgBox = document.querySelector(".img-viewer-box");
+
+        imgBox.addEventListener("mouseover", function (event) {
+          let elements = getElement(this);
+          let parent = elements.parent;
+          let curImg = elements.curImg;
+          if (parent.className != this.className) return;
+          if (parent.className.indexOf(viewClassName) > -1) return;
+          createImgDetailViewer(parent, curImg.src, curImg.width + 4);
+          createZoomArea(event, parent);
+        });
+        imgBox.addEventListener("mouseout", function (event) {
+          let elements = getElement(this);
+          let parent = elements.parent;
+          let curImg = elements.curImg;
+          hideImgDetailViewer(parent);
+          hideZoomViewer(parent);
+        });
+        imgBox.addEventListener("mousemove", function (event) {
+          if(event.target && event.target.offsetParent && event.target.offsetParent.className.indexOf(viewClassName)>-1){
+            imgBox.dispatchEvent(new Event('mouseout'))
+            return;
+          }
+          let elements = getElement(this);
+          let parent = elements.parent;
+          createZoomArea(event, parent);
+        });
+
+        function createImgDetailViewer(parent, imgUrl, left) {
+          let viewer = parent.querySelector("." + viewClassName);
+          if (viewer) {
+            viewer.style.display = "block";
+            return;
+          }
+
+          const div = document.createElement("div");
+          div.className = viewClassName;
+          div.style.left = left + "px";
+
+          let img = document.createElement("img");
+          img.src = imgUrl;
+          div.append(img);
+
+          parent.append(div);
+        }
+
+        function createZoomArea(event, parent) {
+          let cursors = getCursors(event, parent);
+          let viewer = parent.querySelector("." + zoomClassName);
+          if (viewer) {
+            viewer.style.display = "block";
+            let zoomPositon = getZoomPosition(cursors);
+            viewer.style.left = zoomPositon.x + "px";
+            viewer.style.top = zoomPositon.y + "px";
+            return;
+          }
+
+          const div = document.createElement("div");
+          div.className = zoomClassName;
+          let zoomPositon = getZoomPosition(cursors);
+          div.style.left = zoomPositon.x + "px";
+          div.style.top = zoomPositon.y + "px";
+          parent.append(div);
+        }
+
+        function getZoomPosition(cursors) {
+          let x = cursors.x - zoomAreaWidth;
+          let y = cursors.y;
+          if (x < 0) x = 0;
+          if (y < zoomAreaWidth / 2) y = 0;
+          else y = y - zoomAreaWidth / 2;
+          if (y > viewerHeight - zoomAreaWidth)
+            y = viewerHeight - zoomAreaWidth;
+          return { x, y };
+        }
+
+        function hideImgDetailViewer(parent) {
+            console.log('hide');
+          try {
+            parent.querySelector("." + viewClassName).style.display = "none";
+          } catch (err) {
+            console.log(parent);
+            console.error(err);
+          }
+        }
+
+        function hideZoomViewer(parent) {
+          parent.querySelector("." + zoomClassName).style.display = "none";
+        }
+
+        function _getCursorToImage(cursorX, cursorY, imgX, imgY) {
+          let x = cursorX - imgX;
+          let y = cursorY - imgY;
+          return { x, y };
+        }
+        function _getCursors(imgCursor, imgBound) {
+          let cursors = Object.assign({}, imgCursor);
+          cursors.imgWidth = imgBound.width;
+          cursors.imgHeight = imgBound.height;
+          return cursors;
+        }
+
+        function getCursors(event, cnt) {
+          let elements = getElement(cnt);
+          let curImg = elements.curImg;
+          var bound = curImg.getBoundingClientRect();
+          var cursorX = event.x;
+          var cursorY = event.y;
+          var imgCursor = _getCursorToImage(cursorX, cursorY, bound.x, bound.y);
+          let cursors = _getCursors(imgCursor, bound);
+          return cursors;
+        }
+
+        function getElement(that) {
+          try {
+            let parent = that;
+            let curImg = parent.querySelector("img");
+            return { parent, curImg };
+          } catch (err) {
+            console.log(parent, event);
+            console.error(err, that);
+          }
+        }
+      }
+
+      window.onload = initImgDetailViewer;
+    </script>
+  </head>
+  <body style="height: 2000px">
+    <div
+      id="slideable"
+      class="img-viewer-box"
+      style="
+        background-color: green;
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        margin-left: 100px;
+        margin-top: 100px;
+        position: relative;
+      "
+    >
+      <img
+        src="images/thumbnails/tibet-2.jpg"
+        style="width: 300px; height: 300px"
+      />
+    </div>
+  </body>
+</html>
