@@ -15,7 +15,7 @@
         height: 300%;
         object-fit: contain;
       }
-      .img-zoom {
+      .img-detail-zoom {
         position: absolute;
         width: 100px;
         height: 100px;
@@ -25,37 +25,40 @@
     <script>
       function initImgDetailViewer() {
         const viewClassName = "img-detail-viewer";
-        const zoomClassName = "img-zoom";
+        const zoomClassName = "img-detail-zoom";
         const viewerWidth = 300;
         const viewerHeight = 300;
         const zoomAreaWidth = 100;
         const rate=3;
-        const imgBox = document.querySelector(".img-viewer-box");
+        const imgBoxs = document.querySelectorAll(".img-viewer-box");
 
-        imgBox.addEventListener("mouseover", function (event) {
-          let elements = getElement(this);
-          let parent = elements.parent;
-          let curImg = elements.curImg;
-          if (parent.className != this.className) return;
-          if (parent.className.indexOf(viewClassName) > -1) return;
-          createImgDetailViewer(parent, curImg.src, curImg.width + 4);
-          createZoomArea(event, parent);
-        });
-        imgBox.addEventListener("mouseout", function (event) {
-          let elements = getElement(this);
-          let parent = elements.parent;
-          let curImg = elements.curImg;
-          hideImgDetailViewer(parent);
-          hideZoomViewer(parent);
-        });
-        imgBox.addEventListener("mousemove", function (event) {
-          if(event.target && event.target.offsetParent && event.target.offsetParent.className.indexOf(viewClassName)>-1){
-            imgBox.dispatchEvent(new Event('mouseout'))
-            return;
-          }
-          let elements = getElement(this);
-          let parent = elements.parent;
-          createZoomArea(event, parent);
+        imgBoxs.forEach(imgBox => {          
+          imgBox.addEventListener("mouseover", function (event) {
+            let elements = getElement(this);
+            let parent = elements.parent;
+            let curImg = elements.curImg;
+            if (parent.className != this.className) return;
+            if (parent.className.indexOf(viewClassName) > -1) return;
+            createImgDetailViewer(parent, curImg.src, curImg.width + 4);
+            createZoomArea(event, parent);
+          });
+          imgBox.addEventListener("mouseout", function (event) {
+            let elements = getElement(this);
+            let parent = elements.parent;
+            let curImg = elements.curImg;
+            hideImgDetailViewer(parent);
+            hideZoomViewer(parent);
+          });
+          imgBox.addEventListener("mousemove", function (event) {
+            if(event.target && event.target.offsetParent && event.target.offsetParent.className.indexOf(viewClassName)>-1){
+              imgBox.dispatchEvent(new Event('mouseout'))
+              return;
+            }
+            let elements = getElement(this);
+            let parent = elements.parent;
+            createZoomArea(event, parent);
+          });
+
         });
 
         function createImgDetailViewer(parent, imgUrl, left) {
@@ -182,7 +185,6 @@
   </head>
   <body style="height: 2000px">
     <div
-      id="slideable"
       class="img-viewer-box"
       style="
         background-color: green;
@@ -196,6 +198,40 @@
     >
       <img
         src="images/thumbnails/tibet-2.jpg"
+        style="width: 300px; height: 300px;object-fit: contain;"
+      />
+    </div>
+    <div
+      class="img-viewer-box"
+      style="
+        background-color: green;
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        margin-left: 100px;
+        margin-top: 100px;
+        position: relative;
+      "
+    >
+      <img
+        src="images/thumbnails/tibet-3.jpg"
+        style="width: 300px; height: 300px;object-fit: contain;"
+      />
+    </div>
+    <div
+      class="img-viewer-box"
+      style="
+        background-color: green;
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        margin-left: 100px;
+        margin-top: 100px;
+        position: relative;
+      "
+    >
+      <img
+        src="images/thumbnails/tibet-5.jpg"
         style="width: 300px; height: 300px;object-fit: contain;"
       />
     </div>
