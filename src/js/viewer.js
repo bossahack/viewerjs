@@ -253,7 +253,8 @@ class Viewer {
       const zoomButtons = BUTTONS.slice(0, 3);
       const rotateButtons = BUTTONS.slice(7, 9);
       const scaleButtons = BUTTONS.slice(9);
-      const toogleNavbar= BUTTONS[BUTTONS.length-1]
+      const toogleNavbar= BUTTONS[BUTTONS.length-2]
+      const paginationButton=BUTTONS[BUTTONS.length-1]
 
       if (!custom) {
         addClass(toolbar, getResponsiveClass(options.toolbar));

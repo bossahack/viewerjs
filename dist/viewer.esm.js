@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-04-29T09:55:25.888Z
+ * Date: 2024-05-06T00:59:44.122Z
  */
 
 function ownKeys(e, r) {
@@ -373,7 +373,7 @@ var DATA_ACTION = "".concat(NAMESPACE, "Action");
 var REGEXP_SPACES = /\s\s*/;
 
 // Misc
-var BUTTONS = ['zoom-in', 'zoom-out', 'one-to-one', 'reset', 'prev', 'play', 'next', 'rotate-left', 'rotate-right', 'flip-horizontal', 'flip-vertical', 'toogle-navbar', 'divider'];
+var BUTTONS = ['zoom-in', 'zoom-out', 'one-to-one', 'reset', 'prev', 'play', 'next', 'rotate-left', 'rotate-right', 'flip-horizontal', 'flip-vertical', 'toogle-navbar', 'divider', 'pagination'];
 
 /**
  * Check if the given value is a string.
@@ -1898,6 +1898,7 @@ var methods = {
   view: function view() {
     var _this2 = this;
     var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.options.initialViewIndex;
+    this.setPagination(index, this.images.length);
     this.removeClassOne();
     index = Number(index) || 0;
     if (this.hiding || this.played || index < 0 || index >= this.length || this.viewed && index === this.index) {
@@ -2967,6 +2968,11 @@ var methods = {
     (_this$canvas$querySel = this.canvas.querySelectorAll('.tag')) === null || _this$canvas$querySel === void 0 || _this$canvas$querySel.forEach(function (item) {
       return item.remove();
     });
+  },
+  setPagination: function setPagination(index, total) {
+    if (!this.viewer) return;
+    var pagination = this.viewer.querySelector(".".concat(NAMESPACE, "-pagination"));
+    pagination.innerHTML = "".concat(+index + 1, "/").concat(total);
   }
 };
 
@@ -3365,6 +3371,7 @@ var Viewer = /*#__PURE__*/function () {
         var zoomButtons = BUTTONS.slice(0, 3);
         var rotateButtons = BUTTONS.slice(7, 9);
         var scaleButtons = BUTTONS.slice(9);
+        BUTTONS[BUTTONS.length - 2];
         BUTTONS[BUTTONS.length - 1];
         if (!custom) {
           addClass(toolbar, getResponsiveClass(options.toolbar));

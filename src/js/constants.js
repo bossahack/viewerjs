@@ -86,5 +86,6 @@ export const BUTTONS = [
   'flip-horizontal',
   'flip-vertical',
   'toogle-navbar',
-  'divider'
+  'divider',
+  'pagination'
 ];

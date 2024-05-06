@@ -385,6 +385,16 @@
       background-color: #BFBFBF;
       height: 16px;
       margin-top: 4px;
+      cursor: auto;
+    }
+    & [class^='viewer-pagination']{
+      font-size: 15px;
+      color: rgb(255 255 255 / 80%);
+      text-align: center;
+      line-height: 22px;
+      background-color: transparent;
+      width: fit-content;
+      cursor: auto;
     }
 
     & > .viewer-small {

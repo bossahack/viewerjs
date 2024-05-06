@@ -68,8 +68,10 @@ window.onload = function () {
       divider1:true,
       zoomOut: true,
       zoomIn: true,
-      divider2:true,
-      oneToOne: true,      
+      oneToOne: true,     
+      divider2:true, 
+      oneToOne: true,     
+      pagination:true
     },
     title: false,
     tooltip:false,

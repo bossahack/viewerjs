@@ -225,6 +225,7 @@ export default {
    * @returns {Viewer} this
    */
   view(index = this.options.initialViewIndex) {
+    this.setPagination(index,this.images.length)
     this.removeClassOne();
     index = Number(index) || 0;
 
@@ -1447,5 +1448,10 @@ export default {
   },
   removeTags () {
     this.canvas.querySelectorAll('.tag')?.forEach(item=>item.remove());    
+  },
+  setPagination(index,total){
+    if(!this.viewer)return;
+    var pagination=this.viewer.querySelector(`.${NAMESPACE}-pagination`);
+    pagination.innerHTML=`${+index+1}/${total}`
   }
 };
