@@ -43,7 +43,20 @@ function setupTouchEvents() {
     }
 }
  
-window.onload = setupTouchEvents;
+// window.onload = setupTouchEvents;
+
+var abstract =1;
+abstract=2;
+function test(){
+	console.log(abstract)
+    this.ok=function(){
+        var abstract =3;
+        console.log(abstract)
+    }
+}
+test()
+ok()
+console.log(abstract)
 </script>
 </head>
 <body>
