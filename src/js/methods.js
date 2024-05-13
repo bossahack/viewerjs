@@ -1452,6 +1452,6 @@ export default {
   setPagination(index,total){
     if(!this.viewer)return;
     var pagination=this.viewer.querySelector(`.${NAMESPACE}-pagination`);
-    pagination.innerHTML=`${+index+1}/${total}`
+    if(pagination) pagination.innerHTML=`${+index+1}/${total}`
   }
 };

@@ -443,7 +443,7 @@ export default {
 
     this.action = false;
 
-    // Emulate click and double click in touch devices to support backdrop and image zooming (#210).
+    // Emulate click and double click in touch devices to support backdrop and image zooming (#210). tag
     if (
       IS_TOUCH_DEVICE
       && action !== ACTION_ZOOM

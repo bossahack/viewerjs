@@ -255,6 +255,7 @@
     overflow: hidden;
     transition: opacity 0.15s;
     width: 80px;
+    border-radius: 2px;
 
     &:focus,
     &:hover {
@@ -266,7 +267,12 @@
     }
 
     & + li {
-      margin-left: 10px;
+      margin-left: 4px;
+    }
+    & img{
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
     }
   }
 
@@ -425,6 +431,7 @@
       border-radius: 0;
       width: 20px;
       height: 20px;
+      margin-top: 2px;
       &.hide-navbar{
         background-image:url(../images/hide_nav.png);
       }
@@ -541,7 +548,7 @@
 }
 
 .viewer-backdrop {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .viewer-invisible {

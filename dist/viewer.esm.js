@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-05-06T00:59:44.122Z
+ * Date: 2024-05-13T04:28:11.498Z
  */
 
 function ownKeys(e, r) {
@@ -1641,7 +1641,7 @@ var handlers = {
     }
     this.action = false;
 
-    // Emulate click and double click in touch devices to support backdrop and image zooming (#210).
+    // Emulate click and double click in touch devices to support backdrop and image zooming (#210). tag
     if (IS_TOUCH_DEVICE && action !== ACTION_ZOOM && pointer && Date.now() - pointer.timeStamp < 500) {
       clearTimeout(this.clickCanvasTimeout);
       clearTimeout(this.doubleClickImageTimeout);
@@ -2972,7 +2972,7 @@ var methods = {
   setPagination: function setPagination(index, total) {
     if (!this.viewer) return;
     var pagination = this.viewer.querySelector(".".concat(NAMESPACE, "-pagination"));
-    pagination.innerHTML = "".concat(+index + 1, "/").concat(total);
+    if (pagination) pagination.innerHTML = "".concat(+index + 1, "/").concat(total);
   }
 };
 
