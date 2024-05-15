@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-05-13T04:28:11.498Z
+ * Date: 2024-05-14T09:32:40.144Z
  */
 
 'use strict';
@@ -3493,4 +3493,3 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 module.exports = Viewer;
-//# sourceMappingURL=viewer.common.js.map

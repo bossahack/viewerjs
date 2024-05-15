@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-05-08T03:14:08.034Z
+ * Date: 2024-05-14T09:32:39.498Z
  */
 
 .viewer-zoom-in::before, .viewer-zoom-out::before, .viewer-one-to-one::before, .viewer-reset::before, .viewer-prev::before, .viewer-play::before, .viewer-next::before, .viewer-rotate-left::before, .viewer-rotate-right::before, .viewer-flip-horizontal::before, .viewer-flip-vertical::before, .viewer-fullscreen::before, .viewer-fullscreen-exit::before, .viewer-close::before {
@@ -275,6 +275,7 @@
 }
 
 .viewer-list > li {
+    border-radius: 2px;
     color: transparent;
     cursor: pointer;
     float: left;
@@ -297,7 +298,16 @@
     }
 
 .viewer-list > li + li {
-      margin-left: 10px;
+      margin-left: 4px;
+    }
+
+.viewer-list > li img {
+      height: 100% !important;
+      -o-object-fit: cover;
+         object-fit: cover;
+      -ms-transform: none !important;
+          transform: none !important;
+      width: 100% !important;
     }
 
 .viewer-list > .viewer-loading {
@@ -463,6 +473,7 @@
       background-size: contain;
       border-radius: 0;
       height: 20px;
+      margin-top: 2px;
       width: 20px;
     }
 
@@ -578,7 +589,7 @@
 }
 
 .viewer-backdrop {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .viewer-invisible {

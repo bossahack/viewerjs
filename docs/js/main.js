@@ -78,7 +78,11 @@ window.onload = function () {
     initialCoverage: 1,
     inheritedAttributes: [ 'tags' ],
     toggleOnDblclick: false,
-    backdrop:'static'
+    backdrop:'static',
+    filter:function(image){
+      console.log(image)
+      return image.getAttribute('ignore') !=='true'
+    }
   };
   var viewer = window.viewer = new Viewer(pictures, options);
 
