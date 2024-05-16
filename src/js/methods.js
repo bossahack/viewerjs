@@ -399,6 +399,11 @@ export default {
    * @returns {Viewer} this
    */
   prev (loop = false) {
+    if(this.options.justOneChangeCallback){
+        if(this.length==1){
+          this.options.justOneChangeCallback();
+        }
+    }
     this.removeClassOne();
     let index = this.index - 1;
 
@@ -417,6 +422,11 @@ export default {
    * @returns {Viewer} this
    */
   next(loop = false) {
+    if(this.options.justOneChangeCallback){
+        if(this.length==1){
+          this.options.justOneChangeCallback();
+        }
+    }
     this.removeClassOne();
     const maxIndex = this.length - 1;
     let index = this.index + 1;

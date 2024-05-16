@@ -433,9 +433,9 @@
       width: 20px;
       height: 20px;
       margin-top: 2px;
-      &.hide-navbar{
+      /* &.hide-navbar{
         background-image:url(../images/hide_nav.png);
-      }
+      } */
     }
   }
 }

@@ -549,10 +549,21 @@ export default {
       event.target.offsetParent === this.navbar ||
       event.target.offsetParent === this.list ||
       event.target === this.list) {
-      if (event.deltaY < 0) {
-        this.pagePrev(this.options.wheelSpeed || 150);
-      } else {
-        this.pageNext(this.options.wheelSpeed ||150)
+        console.log(event.deltaX,event.deltaY,event.deltaZ);
+      if(Math.abs(event.deltaX)>0){
+        let deltaX=event.deltaX;
+        if(!IS_TOUCH_DEVICE)deltaX=-deltaX;//pc设备相反的
+        if (deltaX > 0 ) {
+          this.pagePrev(50);
+        } else {
+          this.pageNext(50)
+        }
+      }else{
+        if (event.deltaY < 0 ) {
+          this.pagePrev(this.options.wheelSpeed || 150);
+        } else {
+          this.pageNext(this.options.wheelSpeed ||150)
+        }
       }
       return;
     }

@@ -75,13 +75,16 @@ window.onload = function () {
     },
     title: false,
     tooltip:false,
-    initialCoverage: 1,
+    initialCoverage: 0.98,
     inheritedAttributes: [ 'tags' ],
     toggleOnDblclick: false,
     backdrop:'static',
     filter:function(image){
       console.log(image)
       return image.getAttribute('ignore') !=='true'
+    },
+    justOneChangeCallback:function(){
+      alert('仅一张图片')
     }
   };
   var viewer = window.viewer = new Viewer(pictures, options);

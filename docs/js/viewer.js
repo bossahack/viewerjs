@@ -5,7 +5,7 @@
  * Copyright 2015-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2024-05-14T09:32:40.144Z
+ * Date: 2024-05-16T02:07:54.148Z
  */
 
 (function (global, factory) {
@@ -1730,10 +1730,21 @@
         _this4.wheeling = false;
       }, 50);
       if (event.target.offsetParent === this.footer || event.target.offsetParent === this.navbar || event.target.offsetParent === this.list || event.target === this.list) {
-        if (event.deltaY < 0) {
-          this.pagePrev(this.options.wheelSpeed || 150);
+        console.log(event.deltaX, event.deltaY, event.deltaZ);
+        if (Math.abs(event.deltaX) > 0) {
+          var deltaX = event.deltaX;
+          if (!IS_TOUCH_DEVICE) deltaX = -deltaX; //pc设备相反的
+          if (deltaX > 0) {
+            this.pagePrev(50);
+          } else {
+            this.pageNext(50);
+          }
         } else {
-          this.pageNext(this.options.wheelSpeed || 150);
+          if (event.deltaY < 0) {
+            this.pagePrev(this.options.wheelSpeed || 150);
+          } else {
+            this.pageNext(this.options.wheelSpeed || 150);
+          }
         }
         return;
       }
@@ -2047,6 +2058,11 @@
      */
     prev: function prev() {
       var loop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (this.options.justOneChangeCallback) {
+        if (this.length == 1) {
+          this.options.justOneChangeCallback();
+        }
+      }
       this.removeClassOne();
       var index = this.index - 1;
       if (index < 0) {
@@ -2063,6 +2079,11 @@
      */
     next: function next() {
       var loop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (this.options.justOneChangeCallback) {
+        if (this.length == 1) {
+          this.options.justOneChangeCallback();
+        }
+      }
       this.removeClassOne();
       var maxIndex = this.length - 1;
       var index = this.index + 1;
