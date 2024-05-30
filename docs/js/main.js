@@ -88,7 +88,9 @@ window.onload = function () {
     },
     url:function(img){
       return img.dataset.original.replace('_s','_b').replace('_n','_b')
-    }
+    },
+    //缩略图使用的图片
+    navbarImgUrl:'data-small'
   };
   var viewer = window.viewer = new Viewer(pictures, options);
 

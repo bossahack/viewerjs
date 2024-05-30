@@ -1036,6 +1036,8 @@ var render = {
       var src = image.src;
       var alt = image.alt || getImageNameFromURL(src);
       var url = _this.getImageURL(image);
+      var navbarImgUrl = _this.getNavbarImageUrl(image); //缩略图中需要展示的图片
+
       if (src || url) {
         var item = document.createElement('li');
         var img = document.createElement('img');
@@ -1046,7 +1048,7 @@ var render = {
           }
         });
         if (options.navbar) {
-          img.src = src || url;
+          img.src = src || navbarImgUrl || url;
         }
         img.alt = alt;
         img.setAttribute('data-original-url', url || src);
@@ -3000,6 +3002,17 @@ var others = {
       url = '';
     }
     return url;
+  },
+  getNavbarImageUrl: function getNavbarImageUrl(image) {
+    var navbarImgUrl = this.options.navbarImgUrl;
+    if (isString(navbarImgUrl)) {
+      navbarImgUrl = image.getAttribute(navbarImgUrl);
+    } else if (isFunction(url)) {
+      navbarImgUrl = url.call(this, image);
+    } else {
+      navbarImgUrl = '';
+    }
+    return navbarImgUrl;
   },
   enforceFocus: function enforceFocus() {
     var _this = this;

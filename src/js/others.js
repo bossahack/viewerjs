@@ -35,6 +35,18 @@ export default {
 
     return url;
   },
+  getNavbarImageUrl(image){
+    let {navbarImgUrl} =this.options;
+    if (isString(navbarImgUrl)) {
+      navbarImgUrl = image.getAttribute(navbarImgUrl);
+    } else if (isFunction(url)) {
+      navbarImgUrl = url.call(this, image);
+    } else {
+      navbarImgUrl = '';
+    }
+
+    return navbarImgUrl;
+  },
 
   enforceFocus() {
     this.clearEnforceFocus();

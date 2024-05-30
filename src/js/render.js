@@ -84,6 +84,7 @@ export default {
       const { src } = image;
       const alt = image.alt || getImageNameFromURL(src);
       const url = this.getImageURL(image);
+      const navbarImgUrl=this.getNavbarImageUrl(image);//缩略图中需要展示的图片
 
       if (src || url) {
         const item = document.createElement('li');
@@ -98,7 +99,7 @@ export default {
         });
 
         if (options.navbar) {
-          img.src = src || url;
+          img.src = src || navbarImgUrl || url;
         }
 
         img.alt = alt;
