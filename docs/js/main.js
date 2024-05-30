@@ -85,6 +85,9 @@ window.onload = function () {
     },
     justOneChangeCallback:function(){
       alert('仅一张图片')
+    },
+    url:function(img){
+      return img.dataset.original.replace('_s','_b').replace('_n','_b')
     }
   };
   var viewer = window.viewer = new Viewer(pictures, options);

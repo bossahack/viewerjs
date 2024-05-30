@@ -1,13 +1,3 @@
-/*!
- * Viewer.js v1.11.6
- * https://fengyuanchen.github.io/viewerjs
- *
- * Copyright 2015-present Chen Fengyuan
- * Released under the MIT license
- *
- * Date: 2024-05-16T02:07:54.148Z
- */
-
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :

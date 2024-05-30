@@ -17,24 +17,24 @@ module.exports = {
   input: 'src/index.js',
   output: [
     {
-      banner,
+      // banner,
       name,
       file: `dist/${pkg.name}.js`,
       format: 'umd',
     },
     {
-      banner,
+      // banner,
       file: `dist/${pkg.name}.common.js`,
       format: 'cjs',
       exports: 'auto',
     },
     {
-      banner,
+      // banner,
       file: `dist/${pkg.name}.esm.js`,
       format: 'esm',
     },
     {
-      banner,
+      // banner,
       name,
       file: `docs/js/${pkg.name}.js`,
       format: 'umd',
