@@ -299,7 +299,7 @@ export default {
     this.index = index;
     this.imageData = {};
     addClass(image, CLASS_INVISIBLE);
-    // addClass(image, CLASS_FADE);
+    addClass(image, CLASS_FADE);
 
     if (options.loading) {
       addClass(canvas, CLASS_LOADING);

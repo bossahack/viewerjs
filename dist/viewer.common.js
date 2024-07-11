@@ -1048,7 +1048,8 @@ var render = {
           }
         });
         if (options.navbar) {
-          img.src = src || navbarImgUrl || url;
+          //设置的缩略图优先
+          img.src = navbarImgUrl || src || url;
         }
         img.alt = alt;
         img.setAttribute('data-original-url', url || src);
@@ -1414,6 +1415,7 @@ var handlers = {
     this.initImage(function () {
       toggleClass(image, CLASS_MOVE, options.movable);
       toggleClass(image, CLASS_TRANSITION, options.transition);
+      removeClass(image, CLASS_FADE);
       _this.renderImage(function () {
         _this.viewed = true;
         _this.viewing = false;
@@ -1575,6 +1577,7 @@ var handlers = {
 
     // Prevent default behaviours as page zooming in touch devices.
     event.preventDefault();
+    console.log(event);
     if (event.changedTouches) {
       forEach(event.changedTouches, function (touch) {
         pointers[touch.identifier] = getPointer(touch);
@@ -1960,8 +1963,7 @@ var methods = {
     this.index = index;
     this.imageData = {};
     addClass(image, CLASS_INVISIBLE);
-    // addClass(image, CLASS_FADE);
-
+    addClass(image, CLASS_FADE);
     if (options.loading) {
       addClass(canvas, CLASS_LOADING);
     }
@@ -3517,3 +3519,4 @@ var Viewer = /*#__PURE__*/function () {
 assign(Viewer.prototype, render, events, handlers, methods, others);
 
 module.exports = Viewer;
+//# sourceMappingURL=viewer.common.js.map

@@ -166,7 +166,7 @@ window.onload = function () {
     }
   };
 
-  $('[data-toggle="tooltip"]').tooltip();
+  // $('[data-toggle="tooltip"]').tooltip();
 };
 // document.querySelector('body').append(window.navigator.userAgent.toLowerCase())
 

@@ -2,6 +2,7 @@ import {
   ACTION_MOVE,
   ACTION_SWITCH,
   ACTION_ZOOM,
+  CLASS_FADE,
   CLASS_INVISIBLE,
   CLASS_LOADING,
   CLASS_MOVE,
@@ -178,7 +179,7 @@ export default {
     this.initImage(() => {
       toggleClass(image, CLASS_MOVE, options.movable);
       toggleClass(image, CLASS_TRANSITION, options.transition);
-
+      removeClass(image,CLASS_FADE)
       this.renderImage(() => {
         this.viewed = true;
         this.viewing = false;
@@ -372,7 +373,7 @@ export default {
 
     // Prevent default behaviours as page zooming in touch devices.
     event.preventDefault();
-
+    console.log(event)
     if (event.changedTouches) {
       forEach(event.changedTouches, (touch) => {
         pointers[touch.identifier] = getPointer(touch);

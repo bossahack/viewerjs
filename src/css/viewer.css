@@ -570,7 +570,7 @@
 }
 
 .viewer-transition {
-  transition: all 0.01s;
+  transition: all 2s;
 }
 
 @keyframes viewer-spinner {

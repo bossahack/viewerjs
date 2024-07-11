@@ -98,8 +98,8 @@ export default {
           }
         });
 
-        if (options.navbar) {
-          img.src = src || navbarImgUrl || url;
+        if (options.navbar) {//设置的缩略图优先
+          img.src = navbarImgUrl || src || url;
         }
 
         img.alt = alt;
